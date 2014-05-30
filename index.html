@@ -4,8 +4,10 @@
 		<link rel="stylesheet" type="text/css" href="static/main.css"/>
 		<link rel="stylesheet" type="text/css" href="static/xTags/branding/xBranding.css"/>
 
+		<script type='text/javascript' src='static/lib/kinetic-5.0.1.hackfix.js'></script>
 		<script type='text/javascript' src='static/lib/brick-0.9.2.min.js'></script>
 		<script type='text/javascript' src='static/xTags/branding/xBranding.js'></script>
+		<script type='text/javascript' src='static/main.js'></script>
 	</head>
 
 	<body>
@@ -15,6 +17,7 @@
 
 			<div id='mainContent'>
 				<!--All your DOM elements go here-->
+				<div id='shackStatus'></div>
 			</div>
 
 			<div id='push'></div>
@@ -24,7 +27,7 @@
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
-				//all your JS to run on page load goes here
+				renderRacks();
 			});
 		</script>
 
