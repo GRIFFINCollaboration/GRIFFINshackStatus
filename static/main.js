@@ -206,7 +206,7 @@ function renderRacks(){
 		y: 18*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -216,7 +216,7 @@ function renderRacks(){
 		y: 27*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -226,7 +226,7 @@ function renderRacks(){
 		y: 18*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -236,7 +236,7 @@ function renderRacks(){
 		y: 27*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -246,7 +246,7 @@ function renderRacks(){
 		y: 18*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -256,7 +256,7 @@ function renderRacks(){
 		y: 27*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -266,7 +266,7 @@ function renderRacks(){
 		y: 29*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -276,7 +276,7 @@ function renderRacks(){
 		y: 31*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -286,7 +286,7 @@ function renderRacks(){
 		y: 40*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -296,7 +296,7 @@ function renderRacks(){
 		y: 42*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -306,7 +306,7 @@ function renderRacks(){
 		y: 51*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -316,7 +316,7 @@ function renderRacks(){
 		y: 18*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -326,7 +326,7 @@ function renderRacks(){
 		y: 27*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -336,7 +336,7 @@ function renderRacks(){
 		y: 31*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -346,7 +346,7 @@ function renderRacks(){
 		y: 40*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'rosybrown',
+		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -360,7 +360,7 @@ function renderRacks(){
 		y: 3*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'lightblue',
+		fill: 'lightslategray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -370,7 +370,7 @@ function renderRacks(){
 		y: 3*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'lightblue',
+		fill: 'lightslategray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -380,7 +380,7 @@ function renderRacks(){
 		y: 3*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'lightblue',
+		fill: 'lightslategray',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -394,7 +394,7 @@ function renderRacks(){
 		y: 12*grid,
 		width: 20*grid,
 		height: 5*grid,
-		fill: 'lightgreen',
+		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -404,7 +404,7 @@ function renderRacks(){
 		y: 12*grid,
 		width: 20*grid,
 		height: 5*grid,
-		fill: 'lightgreen',
+		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -414,7 +414,7 @@ function renderRacks(){
 		y: 12*grid,
 		width: 20*grid,
 		height: 5*grid,
-		fill: 'lightgreen',
+		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -424,7 +424,7 @@ function renderRacks(){
 		y: 12*grid,
 		width: 20*grid,
 		height: 5*grid,
-		fill: 'lightgreen',
+		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -434,7 +434,7 @@ function renderRacks(){
 		y: 12*grid,
 		width: 20*grid,
 		height: 5*grid,
-		fill: 'lightgreen',
+		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -444,7 +444,7 @@ function renderRacks(){
 		y: 46*grid,
 		width: 20*grid,
 		height: 5*grid,
-		fill: 'lightgreen',
+		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -454,7 +454,7 @@ function renderRacks(){
 		y: 54*grid,
 		width: 20*grid,
 		height: 5*grid,
-		fill: 'lightgreen',
+		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -468,7 +468,7 @@ function renderRacks(){
 		y: 19*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'orchid',
+		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -478,7 +478,7 @@ function renderRacks(){
 		y: 19*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'orchid',
+		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -488,7 +488,7 @@ function renderRacks(){
 		y: 19*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'orchid',
+		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -498,7 +498,7 @@ function renderRacks(){
 		y: 19*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'orchid',
+		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -508,7 +508,7 @@ function renderRacks(){
 		y: 32*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'orchid',
+		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -518,7 +518,7 @@ function renderRacks(){
 		y: 32*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'orchid',
+		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -528,7 +528,7 @@ function renderRacks(){
 		y: 43*grid,
 		width: 20*grid,
 		height: 8*grid,
-		fill: 'orchid',
+		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})
@@ -542,7 +542,7 @@ function renderRacks(){
 		y: 46*grid,
 		width: 20*grid,
 		height: 6*grid,
-		fill: 'salmon',
+		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -552,7 +552,7 @@ function renderRacks(){
 		y: 53*grid,
 		width: 20*grid,
 		height: 6*grid,
-		fill: 'salmon',
+		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -562,7 +562,7 @@ function renderRacks(){
 		y: 53*grid,
 		width: 20*grid,
 		height: 6*grid,
-		fill: 'salmon',
+		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -572,7 +572,7 @@ function renderRacks(){
 		y: 53*grid,
 		width: 20*grid,
 		height: 6*grid,
-		fill: 'salmon',
+		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -586,7 +586,7 @@ function renderRacks(){
 		y: 52*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'peru',
+		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -596,7 +596,7 @@ function renderRacks(){
 		y: 52*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'peru',
+		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -606,7 +606,7 @@ function renderRacks(){
 		y: 52*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'peru',
+		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -616,7 +616,7 @@ function renderRacks(){
 		y: 52*grid,
 		width: 20*grid,
 		height: 1*grid,
-		fill: 'peru',
+		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -630,7 +630,7 @@ function renderRacks(){
 		y: 39*grid,
 		width: 20*grid,
 		height: 2*grid,
-		fill: 'green',
+		fill: 'steelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -640,7 +640,7 @@ function renderRacks(){
 		y: 42*grid,
 		width: 20*grid,
 		height: 2*grid,
-		fill: 'green',
+		fill: 'steelblue',
 		stroke: 'black',
 		strokeWidth: 2
 	})	
@@ -654,7 +654,7 @@ function renderRacks(){
 		y: 61.5*grid,
 		width: 8*grid,
 		height: 2*grid,
-		fill: 'silver',
+		fill: 'white',
 		stroke: 'white',
 		strokeWidth: 2
 	})
@@ -664,7 +664,7 @@ function renderRacks(){
 		y: 61.5*grid,
 		width: 8*grid,
 		height: 2*grid,
-		fill: 'silver',
+		fill: 'white',
 		stroke: 'white',
 		strokeWidth: 2
 	})
@@ -674,7 +674,7 @@ function renderRacks(){
 		y: 61.5*grid,
 		width: 8*grid,
 		height: 2*grid,
-		fill: 'silver',
+		fill: 'white',
 		stroke: 'white',
 		strokeWidth: 2
 	})
@@ -684,7 +684,7 @@ function renderRacks(){
 		y: 61.5*grid,
 		width: 8*grid,
 		height: 2*grid,
-		fill: 'silver',
+		fill: 'white',
 		stroke: 'white',
 		strokeWidth: 2
 	})
@@ -694,7 +694,7 @@ function renderRacks(){
 		y: 61.5*grid,
 		width: 8*grid,
 		height: 2*grid,
-		fill: 'silver',
+		fill: 'white',
 		stroke: 'white',
 		strokeWidth: 2
 	})
