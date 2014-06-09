@@ -1,28 +1,19 @@
-function helloWorld(){
-	console.log([window.innerWidth, window.innerHeight]);
-}
+///////////////////////////////////////////////////////////////////////////
+// This function constructs the GRIFFIN electronics shack web interface.
+///////////////////////////////////////////////////////////////////////////
 
 function renderRacks(){
 
 	var width = 0.8*window.innerWidth,
 		height = 0.8*window.innerHeight,
-		grid = Math.min(width/67, height/64);
-
-		rackImage = {};
-		cells = {};
-		sensors = {};
-		numbers = {};
-		fixedlabels = {};
-		cableman = {};
-		hv = {};
-		nim = {};
-		vme = {};
-		dsa = {};
-		net = {};
-		comp = {};
+		grid = Math.min(width/67, height/64),
+		rackImage = {},
+		cells = {},
+		label = {},
+		i;
 
     ///////////////////////////////////////////////////////////////////////////
-    // Kinetic.js setup
+    // Kinetic.js is setup to create the initial environment.
     ///////////////////////////////////////////////////////////////////////////
 
 	rackImage.stage = new Kinetic.Stage({
@@ -32,176 +23,70 @@ function renderRacks(){
      });
 
 	///////////////////////////////////////////////////////////////////////////
-	// Make main layer
+	// The main layer is made which will contain all of the fixed racks and
+	// crates for the shack.
     ///////////////////////////////////////////////////////////////////////////
 
 	rackImage.mainLayer = new Kinetic.Layer();
 	rackImage.stage.add(rackImage.mainLayer);
 
     ///////////////////////////////////////////////////////////////////////////
-	// This sets up the racks
+	// The cells.racks loop sets up the 5 racks.
     ///////////////////////////////////////////////////////////////////////////
 
-	cells.rack1 = new Kinetic.Rect({
-		x: 33*grid,
-		y: 3*grid,
-		width: 20*grid,
-		height: 56*grid,
-		fill: 'white',
-		stroke: 'black',
-		strokeWidth: 2
-	});
+   	cells.racks = [];
 
-	cells.rack2 = new Kinetic.Rect({
-		x: 53*grid,
-		y: 3*grid,
-		width: 20*grid,
-		height: 56*grid,
-		fill: 'white',
-		stroke: 'black',
-		strokeWidth: 2
-	});
-
-
-	cells.rack3 = new Kinetic.Rect({
-		x: 73*grid,
-		y: 3*grid,
-		width: 20*grid,
-		height: 56*grid,
-		fill: 'white',
-		stroke: 'black',
-		strokeWidth: 2
-	});
-
-
-	cells.rack4 = new Kinetic.Rect({
-		x: 93*grid,
-		y: 3*grid,
-		width: 20*grid,
-		height: 56*grid,
-		fill: 'white',
-		stroke: 'black',
-		strokeWidth: 2
-	});
-
-
-	cells.rack5 = new Kinetic.Rect({
-		x: 113*grid,
-		y: 3*grid,
-		width: 20*grid,
-		height: 56*grid,
-		fill: 'white',
-		stroke: 'black',
-		strokeWidth: 2
-	});
+    for (i = 0; i < 5; i++){
+		cells.racks[i] = new Kinetic.Rect({
+			x: 33*grid + 20*grid*i,
+			y: 3*grid,
+			width: 20*grid,
+			height: 56*grid,
+			fill: 'white',
+			stroke: 'black',
+			strokeWidth: 2
+		});
+	}    
 
     ///////////////////////////////////////////////////////////////////////////
-	// Adding temperature sensors
+	// The temperature sensors are located at the top and bottom of the racks
+	// with cells.sensorstop at the top and cells.sensorsbottom at the bottom.
     ///////////////////////////////////////////////////////////////////////////
 
-	sensors.sensor1 = new Kinetic.Rect({
-		x: 35*grid,
-		y: 1*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
+    cells.sensorstop = [];
+    cells.sensorsbottom = [];
 
-	sensors.sensor2 = new Kinetic.Rect({
-		x: 55*grid,
-		y: 1*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
+    for (i = 0; i < 5; i++){
+		cells.sensorstop[i] = new Kinetic.Rect({
+			x: 35*grid + 20*grid*i,
+			y: 1*grid,
+			width: 16*grid,
+			height: 2*grid,
+			fill: 'gray',
+			stroke: 'black',
+			strokeWidth: 2
+		});
+	}
 
-	sensors.sensor3 = new Kinetic.Rect({
-		x: 75*grid,
-		y: 1*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
-
-	sensors.sensor4 = new Kinetic.Rect({
-		x: 95*grid,
-		y: 1*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
-
-	sensors.sensor5 = new Kinetic.Rect({
-		x: 115*grid,
-		y: 1*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
-
-	sensors.sensor6 = new Kinetic.Rect({
-		x: 35*grid,
-		y: 59*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
-
-	sensors.sensor7 = new Kinetic.Rect({
-		x: 55*grid,
-		y: 59*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
-	sensors.sensor8 = new Kinetic.Rect({
-		x: 75*grid,
-		y: 59*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
-	sensors.sensor9 = new Kinetic.Rect({
-		x: 95*grid,
-		y: 59*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
-
-	sensors.sensor10 = new Kinetic.Rect({
-		x: 115*grid,
-		y: 59*grid,
-		width: 16*grid,
-		height: 2*grid,
-		fill: 'gray',
-		stroke: 'black',
-		strokeWidth: 2
-	})
+	for (i = 0; i < 5; i++){
+		cells.sensorsbottom[i] = new Kinetic.Rect({
+			x: 35*grid + 20*grid*i,
+			y: 59*grid,
+			width: 16*grid,
+			height: 2*grid,
+			fill: 'gray',
+			stroke: 'black',
+			strokeWidth: 2
+		});
+	}
 
 	///////////////////////////////////////////////////////////////////////////
-	// Blank cable management sections are added
+	// Blank cable management sections are added in the form of cell.cableman
+	// followed by the number of the rack and the number of the crate within
+	// that rack from top to bottom.
 	///////////////////////////////////////////////////////////////////////////	
 
-	cableman.rack11 = new Kinetic.Rect({
+	cells.cableman11 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 18*grid,
 		width: 20*grid,
@@ -209,9 +94,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack12 = new Kinetic.Rect({
+	cells.cableman12 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 27*grid,
 		width: 20*grid,
@@ -219,9 +104,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack21 = new Kinetic.Rect({
+	cells.cableman21 = new Kinetic.Rect({
 		x: 53*grid,
 		y: 18*grid,
 		width: 20*grid,
@@ -229,9 +114,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack22 = new Kinetic.Rect({
+	cells.cableman22 = new Kinetic.Rect({
 		x: 53*grid,
 		y: 27*grid,
 		width: 20*grid,
@@ -239,9 +124,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack31 = new Kinetic.Rect({
+	cells.cableman31 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 18*grid,
 		width: 20*grid,
@@ -249,9 +134,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});
 
-	cableman.rack32 = new Kinetic.Rect({
+	cells.cableman32 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 27*grid,
 		width: 20*grid,
@@ -259,9 +144,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack33 = new Kinetic.Rect({
+	cells.cableman33 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 29*grid,
 		width: 20*grid,
@@ -269,9 +154,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack34 = new Kinetic.Rect({
+	cells.cableman34 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 31*grid,
 		width: 20*grid,
@@ -279,9 +164,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack35 = new Kinetic.Rect({
+	cells.cableman35 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 40*grid,
 		width: 20*grid,
@@ -289,9 +174,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack36 = new Kinetic.Rect({
+	cells.cableman36 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 42*grid,
 		width: 20*grid,
@@ -299,9 +184,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack37 = new Kinetic.Rect({
+	cells.cableman37 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 51*grid,
 		width: 20*grid,
@@ -309,9 +194,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack41 = new Kinetic.Rect({
+	cells.cableman41 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 18*grid,
 		width: 20*grid,
@@ -319,9 +204,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack42 = new Kinetic.Rect({
+	cells.cableman42 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 27*grid,
 		width: 20*grid,
@@ -329,9 +214,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack43 = new Kinetic.Rect({
+	cells.cableman43 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 31*grid,
 		width: 20*grid,
@@ -339,9 +224,9 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	cableman.rack44 = new Kinetic.Rect({
+	cells.cableman44 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 40*grid,
 		width: 20*grid,
@@ -349,13 +234,13 @@ function renderRacks(){
 		fill: 'dimgray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
 	///////////////////////////////////////////////////////////////////////////
-	// HV crates are included next
+	// The 3 HV crates are added next and numbered from left to right.
 	///////////////////////////////////////////////////////////////////////////	
 
-	hv.hv1 = new Kinetic.Rect({
+	cells.hv1 = new Kinetic.Rect({
 		x: 53*grid,
 		y: 3*grid,
 		width: 20*grid,
@@ -363,9 +248,9 @@ function renderRacks(){
 		fill: 'lightslategray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	hv.hv2 = new Kinetic.Rect({
+	cells.hv2 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 3*grid,
 		width: 20*grid,
@@ -373,9 +258,9 @@ function renderRacks(){
 		fill: 'lightslategray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	hv.hv3 = new Kinetic.Rect({
+	cells.hv3 = new Kinetic.Rect({
 		x: 113*grid,
 		y: 3*grid,
 		width: 20*grid,
@@ -383,13 +268,14 @@ function renderRacks(){
 		fill: 'lightslategray',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
 	///////////////////////////////////////////////////////////////////////////
-	// NIM crates are included next
+	// NIM crates are included next and numbered left to right, and then from
+	// top to bottom.
 	///////////////////////////////////////////////////////////////////////////	
 
-	nim.nim1 = new Kinetic.Rect({
+	cells.nim1 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 12*grid,
 		width: 20*grid,
@@ -397,9 +283,9 @@ function renderRacks(){
 		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	nim.nim2 = new Kinetic.Rect({
+	cells.nim2 = new Kinetic.Rect({
 		x: 53*grid,
 		y: 12*grid,
 		width: 20*grid,
@@ -407,9 +293,9 @@ function renderRacks(){
 		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	nim.nim3 = new Kinetic.Rect({
+	cells.nim3 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 12*grid,
 		width: 20*grid,
@@ -417,9 +303,9 @@ function renderRacks(){
 		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	nim.nim4 = new Kinetic.Rect({
+	cells.nim4 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 12*grid,
 		width: 20*grid,
@@ -427,9 +313,9 @@ function renderRacks(){
 		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	nim.nim5 = new Kinetic.Rect({
+	cells.nim5 = new Kinetic.Rect({
 		x: 113*grid,
 		y: 12*grid,
 		width: 20*grid,
@@ -437,9 +323,9 @@ function renderRacks(){
 		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	nim.nim6 = new Kinetic.Rect({
+	cells.nim6 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 46*grid,
 		width: 20*grid,
@@ -447,9 +333,9 @@ function renderRacks(){
 		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	nim.nim7 = new Kinetic.Rect({
+	cells.nim7 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 54*grid,
 		width: 20*grid,
@@ -457,13 +343,14 @@ function renderRacks(){
 		fill: 'lightsteelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
 	///////////////////////////////////////////////////////////////////////////
-	// VME crates are included next
+	// VME crates are added next and numbered from left to right, then from top
+	// to bottom.
 	///////////////////////////////////////////////////////////////////////////	
 
-	vme.vme1 = new Kinetic.Rect({
+	cells.vme1 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 19*grid,
 		width: 20*grid,
@@ -471,9 +358,9 @@ function renderRacks(){
 		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	vme.vme2 = new Kinetic.Rect({
+	cells.vme2 = new Kinetic.Rect({
 		x: 53*grid,
 		y: 19*grid,
 		width: 20*grid,
@@ -481,9 +368,9 @@ function renderRacks(){
 		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	vme.vme3 = new Kinetic.Rect({
+	cells.vme3 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 19*grid,
 		width: 20*grid,
@@ -491,9 +378,9 @@ function renderRacks(){
 		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	vme.vme4 = new Kinetic.Rect({
+	cells.vme4 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 19*grid,
 		width: 20*grid,
@@ -501,9 +388,9 @@ function renderRacks(){
 		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	vme.vme5 = new Kinetic.Rect({
+	cells.vme5 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 32*grid,
 		width: 20*grid,
@@ -511,9 +398,9 @@ function renderRacks(){
 		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	vme.vme6 = new Kinetic.Rect({
+	cells.vme6 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 32*grid,
 		width: 20*grid,
@@ -521,9 +408,9 @@ function renderRacks(){
 		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
-	vme.vme7 = new Kinetic.Rect({
+	cells.vme7 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 43*grid,
 		width: 20*grid,
@@ -531,13 +418,14 @@ function renderRacks(){
 		fill: 'powderblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})
+	});
 
 	///////////////////////////////////////////////////////////////////////////
-	// Data storage arrays are added
+	// Data storage arrays are added, all numbered from left to right and then
+	// top to bottom.
 	///////////////////////////////////////////////////////////////////////////
 
-	dsa.dsa1 = new Kinetic.Rect({
+	cells.dsa1 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 46*grid,
 		width: 20*grid,
@@ -545,9 +433,9 @@ function renderRacks(){
 		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
-	dsa.dsa2 = new Kinetic.Rect({
+	cells.dsa2 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 53*grid,
 		width: 20*grid,
@@ -555,9 +443,9 @@ function renderRacks(){
 		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
-	dsa.dsa3 = new Kinetic.Rect({
+	cells.dsa3 = new Kinetic.Rect({
 		x: 53*grid,
 		y: 53*grid,
 		width: 20*grid,
@@ -565,9 +453,9 @@ function renderRacks(){
 		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
-	dsa.dsa4 = new Kinetic.Rect({
+	cells.dsa4 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 53*grid,
 		width: 20*grid,
@@ -575,13 +463,13 @@ function renderRacks(){
 		fill: 'silver',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
 	///////////////////////////////////////////////////////////////////////////
-	// The network switches are added
+	// The network switches are added and numbered from left to right.
 	///////////////////////////////////////////////////////////////////////////
 
-	net.net1 = new Kinetic.Rect({
+	cells.net1 = new Kinetic.Rect({
 		x: 53*grid,
 		y: 52*grid,
 		width: 20*grid,
@@ -589,9 +477,9 @@ function renderRacks(){
 		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
-	net.net2 = new Kinetic.Rect({
+	cells.net2 = new Kinetic.Rect({
 		x: 73*grid,
 		y: 52*grid,
 		width: 20*grid,
@@ -599,9 +487,9 @@ function renderRacks(){
 		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
-	net.net3 = new Kinetic.Rect({
+	cells.net3 = new Kinetic.Rect({
 		x: 93*grid,
 		y: 52*grid,
 		width: 20*grid,
@@ -609,9 +497,9 @@ function renderRacks(){
 		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
-	net.net4 = new Kinetic.Rect({
+	cells.net4 = new Kinetic.Rect({
 		x: 113*grid,
 		y: 52*grid,
 		width: 20*grid,
@@ -619,13 +507,13 @@ function renderRacks(){
 		fill: 'slategray',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
 	///////////////////////////////////////////////////////////////////////////////
-	// The computers are added
+	// The 2 computers are added into rack 1.
 	///////////////////////////////////////////////////////////////////////////////
 
-	comp.comp1 = new Kinetic.Rect({
+	cells.comp1 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 39*grid,
 		width: 20*grid,
@@ -633,9 +521,9 @@ function renderRacks(){
 		fill: 'steelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
-	comp.comp2 = new Kinetic.Rect({
+	cells.comp2 = new Kinetic.Rect({
 		x: 33*grid,
 		y: 42*grid,
 		width: 20*grid,
@@ -643,189 +531,449 @@ function renderRacks(){
 		fill: 'steelblue',
 		stroke: 'black',
 		strokeWidth: 2
-	})	
+	});	
 
 	///////////////////////////////////////////////////////////////////////////
-	// The racks are numbered as reference points
+	// In order to make this interface user-friendly, each rack is given a
+	// label so that it is clear what crates, switches and cables are located
+	// where. The interface visualises how the shack looks from the front and 
+	// the racks are correspondingly labelled from left to right (1 to 5).
 	///////////////////////////////////////////////////////////////////////////
 
-		numbers.number1 = new Kinetic.Rect({
-		x: 39*grid,
-		y: 61.5*grid,
-		width: 8*grid,
-		height: 2*grid,
-		fill: 'white',
-		stroke: 'white',
-		strokeWidth: 2
-	})
+	cells.labels = [];
 
-		numbers.number2 = new Kinetic.Rect({
-		x: 59*grid,
-		y: 61.5*grid,
-		width: 8*grid,
-		height: 2*grid,
-		fill: 'white',
-		stroke: 'white',
-		strokeWidth: 2
-	})
+	for (i = 0; i < 5; i++)
+		cells.labels[i] = new Kinetic.Rect({
+			x: 39*grid + 20*grid*i,
+			y: 61.5*grid,
+			width: 8*grid,
+			height: 2*grid,
+			fill: 'white',
+			stroke: 'white',
+			strokeWidth: 2
+		});
 
-		numbers.number3 = new Kinetic.Rect({
-		x: 79*grid,
-		y: 61.5*grid,
-		width: 8*grid,
-		height: 2*grid,
-		fill: 'white',
-		stroke: 'white',
-		strokeWidth: 2
-	})
+    ///////////////////////////////////////////////////////////////////////////
+    // rackImage.mainLayer.add(...) adds the newly created objects to the main
+    // layer within the stage (rackImage) set out in the conditions at the 
+    // beginning of the code.
+    ///////////////////////////////////////////////////////////////////////////
 
-		numbers.number4 = new Kinetic.Rect({
-		x: 99*grid,
-		y: 61.5*grid,
-		width: 8*grid,
-		height: 2*grid,
-		fill: 'white',
-		stroke: 'white',
-		strokeWidth: 2
-	})
+	for (i = 0; i < 5; i++)
+		rackImage.mainLayer.add(cells.racks[i]);
 
-		numbers.number5 = new Kinetic.Rect({
-		x: 119*grid,
-		y: 61.5*grid,
-		width: 8*grid,
-		height: 2*grid,
-		fill: 'white',
-		stroke: 'white',
-		strokeWidth: 2
-	})
+	for (i = 0; i < 5; i++)
+		rackImage.mainLayer.add(cells.sensorstop[i]), 
+		rackImage.mainLayer.add(cells.sensorsbottom[i]);
 
-	rackImage.mainLayer.add(cells.rack1);
-	rackImage.mainLayer.add(cells.rack2);
-	rackImage.mainLayer.add(cells.rack3);
-	rackImage.mainLayer.add(cells.rack4);
-	rackImage.mainLayer.add(cells.rack5);
+	rackImage.mainLayer.add(cells.cableman11);
+	rackImage.mainLayer.add(cells.cableman12);
+	rackImage.mainLayer.add(cells.cableman21);
+	rackImage.mainLayer.add(cells.cableman22);
+	rackImage.mainLayer.add(cells.cableman31);
+	rackImage.mainLayer.add(cells.cableman32);
+	rackImage.mainLayer.add(cells.cableman33);
+	rackImage.mainLayer.add(cells.cableman34);
+	rackImage.mainLayer.add(cells.cableman35);
+	rackImage.mainLayer.add(cells.cableman36);
+	rackImage.mainLayer.add(cells.cableman37);
+	rackImage.mainLayer.add(cells.cableman41);
+	rackImage.mainLayer.add(cells.cableman42);
+	rackImage.mainLayer.add(cells.cableman43);
+	rackImage.mainLayer.add(cells.cableman44);
 
-	rackImage.mainLayer.add(sensors.sensor1);
-	rackImage.mainLayer.add(sensors.sensor2);
-	rackImage.mainLayer.add(sensors.sensor3);
-	rackImage.mainLayer.add(sensors.sensor4);
-	rackImage.mainLayer.add(sensors.sensor5);
-	rackImage.mainLayer.add(sensors.sensor6);
-	rackImage.mainLayer.add(sensors.sensor7);
-	rackImage.mainLayer.add(sensors.sensor8);
-	rackImage.mainLayer.add(sensors.sensor9);
-	rackImage.mainLayer.add(sensors.sensor10);
+	rackImage.mainLayer.add(cells.hv1);
+	rackImage.mainLayer.add(cells.hv2);
+	rackImage.mainLayer.add(cells.hv3);
 
-	rackImage.mainLayer.add(cableman.rack11);
-	rackImage.mainLayer.add(cableman.rack12);
-	rackImage.mainLayer.add(cableman.rack21);
-	rackImage.mainLayer.add(cableman.rack22);
-	rackImage.mainLayer.add(cableman.rack31);
-	rackImage.mainLayer.add(cableman.rack32);
-	rackImage.mainLayer.add(cableman.rack33);
-	rackImage.mainLayer.add(cableman.rack34);
-	rackImage.mainLayer.add(cableman.rack35);
-	rackImage.mainLayer.add(cableman.rack36);
-	rackImage.mainLayer.add(cableman.rack37);
-	rackImage.mainLayer.add(cableman.rack41);
-	rackImage.mainLayer.add(cableman.rack42);
-	rackImage.mainLayer.add(cableman.rack43);
-	rackImage.mainLayer.add(cableman.rack44);
+	rackImage.mainLayer.add(cells.nim1);
+	rackImage.mainLayer.add(cells.nim2);
+	rackImage.mainLayer.add(cells.nim3);
+	rackImage.mainLayer.add(cells.nim4);
+	rackImage.mainLayer.add(cells.nim5);
+	rackImage.mainLayer.add(cells.nim6);
+	rackImage.mainLayer.add(cells.nim7);
 
-	rackImage.mainLayer.add(hv.hv1);
-	rackImage.mainLayer.add(hv.hv2);
-	rackImage.mainLayer.add(hv.hv3);
+	rackImage.mainLayer.add(cells.vme1);
+	rackImage.mainLayer.add(cells.vme2);
+	rackImage.mainLayer.add(cells.vme3);
+	rackImage.mainLayer.add(cells.vme4);
+	rackImage.mainLayer.add(cells.vme5);
+	rackImage.mainLayer.add(cells.vme6);
+	rackImage.mainLayer.add(cells.vme7);
 
-	rackImage.mainLayer.add(nim.nim1);
-	rackImage.mainLayer.add(nim.nim2);
-	rackImage.mainLayer.add(nim.nim3);
-	rackImage.mainLayer.add(nim.nim4);
-	rackImage.mainLayer.add(nim.nim5);
-	rackImage.mainLayer.add(nim.nim6);
-	rackImage.mainLayer.add(nim.nim7);
+	rackImage.mainLayer.add(cells.dsa1);
+	rackImage.mainLayer.add(cells.dsa2);
+	rackImage.mainLayer.add(cells.dsa3);
+	rackImage.mainLayer.add(cells.dsa4);
 
-	rackImage.mainLayer.add(vme.vme1);
-	rackImage.mainLayer.add(vme.vme2);
-	rackImage.mainLayer.add(vme.vme3);
-	rackImage.mainLayer.add(vme.vme4);
-	rackImage.mainLayer.add(vme.vme5);
-	rackImage.mainLayer.add(vme.vme6);
-	rackImage.mainLayer.add(vme.vme7);
+	rackImage.mainLayer.add(cells.net1);
+	rackImage.mainLayer.add(cells.net2);
+	rackImage.mainLayer.add(cells.net3);
+	rackImage.mainLayer.add(cells.net4);
 
-	rackImage.mainLayer.add(dsa.dsa1);
-	rackImage.mainLayer.add(dsa.dsa2);
-	rackImage.mainLayer.add(dsa.dsa3);
-	rackImage.mainLayer.add(dsa.dsa4);
+	rackImage.mainLayer.add(cells.comp1);
+	rackImage.mainLayer.add(cells.comp2);
 
-	rackImage.mainLayer.add(net.net1);
-	rackImage.mainLayer.add(net.net2);
-	rackImage.mainLayer.add(net.net3);
-	rackImage.mainLayer.add(net.net4);
-
-	rackImage.mainLayer.add(comp.comp1);
-	rackImage.mainLayer.add(comp.comp2);
-
-	rackImage.mainLayer.add(numbers.number1);
-	rackImage.mainLayer.add(numbers.number2);
-	rackImage.mainLayer.add(numbers.number3);
-	rackImage.mainLayer.add(numbers.number4);
-	rackImage.mainLayer.add(numbers.number5);
+	for (i = 0; i < 5; i++)
+		rackImage.mainLayer.add(cells.labels[i]);
 
 ///////////////////////////////////////////////////////////////////////////////
-// The fixed labels are added
+// The racks have been given labels and label.rack(1 to 5) assigns text to
+// these blank labels so that it is clear to the user which racks are being
+// referred to. The variable 'label' instead of 'cell' is being used here to
+// distinguish between text and an object within this interface.
 ///////////////////////////////////////////////////////////////////////////////
 
-    fixedlabels.label1 = new Kinetic.Text({
-    	x: 40.15*grid,
-        y: 61.48*grid,
-        text: 'Rack 1',
-        fontSize: 2.2*grid,
-        fontFamily: 'Calibri',
-        fill: 'black'
-    });
+	label.rack1 = new Kinetic.Text({
+   		x: 40.15*grid,
+       	y: 61.48*grid,
+      	text: 'Rack 1',
+       	fontSize: 2.2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
 
-    fixedlabels.label2 = new Kinetic.Text({
-    	x: 60.15*grid,
-        y: 61.48*grid,
-        text: 'Rack 2',
-        fontSize: 2.2*grid,
-        fontFamily: 'Calibri',
-        fill: 'black'
-    });
+	label.rack2 = new Kinetic.Text({
+   		x: 60.15*grid,
+       	y: 61.48*grid,
+      	text: 'Rack 2',
+       	fontSize: 2.2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
 
-    fixedlabels.label3 = new Kinetic.Text({
-    	x: 80.15*grid,
-        y: 61.48*grid,
-        text: 'Rack 3',
-        fontSize: 2.2*grid,
-        fontFamily: 'Calibri',
-        fill: 'black'
-    });
+	label.rack3 = new Kinetic.Text({
+   		x: 80.15*grid,
+       	y: 61.48*grid,
+      	text: 'Rack 3',
+       	fontSize: 2.2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
 
-    fixedlabels.label4 = new Kinetic.Text({
-    	x: 100.15*grid,
-        y: 61.48*grid,
-        text: 'Rack 4',
-        fontSize: 2.2*grid,
-        fontFamily: 'Calibri',
-        fill: 'black'
-    });
+	label.rack4 = new Kinetic.Text({
+   		x: 100.15*grid,
+       	y: 61.48*grid,
+      	text: 'Rack 4',
+       	fontSize: 2.2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
 
-    fixedlabels.label5 = new Kinetic.Text({
-    	x: 120.15*grid,
-        y: 61.48*grid,
-        text: 'Rack 5',
-        fontSize: 2.2*grid,
-        fontFamily: 'Calibri',
-        fill: 'black'
-    });
+	label.rack5 = new Kinetic.Text({
+   		x: 120.15*grid,
+       	y: 61.48*grid,
+      	text: 'Rack 5',
+       	fontSize: 2.2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
 
-    rackImage.mainLayer.add(fixedlabels.label1);
-    rackImage.mainLayer.add(fixedlabels.label2);
-    rackImage.mainLayer.add(fixedlabels.label3);
-    rackImage.mainLayer.add(fixedlabels.label4);
-    rackImage.mainLayer.add(fixedlabels.label5);
+   	///////////////////////////////////////////////////////////////////////////
+    // The rest of the labels for the crates are added in the following lines.
+    ///////////////////////////////////////////////////////////////////////////
 
+    label.hv1 = new Kinetic.Text({
+   		x: 59*grid,
+       	y: 5*grid,
+      	text: 'HV 1',
+       	fontSize: 4*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+    label.hv2 = new Kinetic.Text({
+   		x: 99*grid,
+       	y: 5*grid,
+      	text: 'HV 2',
+       	fontSize: 4*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.hv3 = new Kinetic.Text({
+   		x: 119*grid,
+       	y: 5*grid,
+      	text: 'HV 3',
+       	fontSize: 4*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	///////////////////////////////////////////////////////////////////////////
+
+   	label.nim1 = new Kinetic.Text({
+   		x: 39*grid,
+       	y: 13*grid,
+      	text: 'NIM 1',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.nim2 = new Kinetic.Text({
+   		x: 59*grid,
+       	y: 13*grid,
+      	text: 'NIM 2',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.nim3 = new Kinetic.Text({
+   		x: 79*grid,
+       	y: 13*grid,
+      	text: 'NIM 3',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.nim4 = new Kinetic.Text({
+   		x: 99*grid,
+       	y: 13*grid,
+      	text: 'NIM 4',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.nim5 = new Kinetic.Text({
+   		x: 119*grid,
+       	y: 13*grid,
+      	text: 'NIM 5',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.nim6 = new Kinetic.Text({
+   		x: 99*grid,
+       	y: 47*grid,
+      	text: 'NIM 6',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.nim7 = new Kinetic.Text({
+   		x: 99*grid,
+       	y: 55*grid,
+      	text: 'NIM 7',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	///////////////////////////////////////////////////////////////////////////
+
+   	label.vme1 = new Kinetic.Text({
+   		x: 39*grid,
+       	y: 21.5*grid,
+      	text: 'VME 1',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.vme2 = new Kinetic.Text({
+   		x: 59*grid,
+       	y: 21.5*grid,
+      	text: 'VME 2',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.vme3 = new Kinetic.Text({
+   		x: 79*grid,
+       	y: 21.5*grid,
+      	text: 'VME 3',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.vme4 = new Kinetic.Text({
+   		x: 99*grid,
+       	y: 21.5*grid,
+      	text: 'VME 4',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.vme5 = new Kinetic.Text({
+   		x: 79*grid,
+       	y: 34*grid,
+      	text: 'VME 5',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.vme6 = new Kinetic.Text({
+   		x: 99*grid,
+       	y: 34*grid,
+      	text: 'VME 6',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.vme7 = new Kinetic.Text({
+   		x: 79*grid,
+       	y: 45*grid,
+      	text: 'VME 7',
+       	fontSize: 3*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	///////////////////////////////////////////////////////////////////////////
+
+   	label.comp1 = new Kinetic.Text({
+   		x: 38.5*grid,
+       	y: 39*grid,
+      	text: 'Computer 1',
+       	fontSize: 1.8*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	label.comp2 = new Kinetic.Text({
+   		x: 38.5*grid,
+       	y: 42.1*grid,
+      	text: 'Computer 2',
+       	fontSize: 1.8*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});
+
+   	///////////////////////////////////////////////////////////////////////////
+
+   	label.dsa1 = new Kinetic.Text({
+   		x: 34.7*grid,
+       	y: 48*grid,
+      	text: 'Data Storage Array 1',
+       	fontSize: 2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   
+
+   	label.dsa2 = new Kinetic.Text({
+   		x: 34.7*grid,
+       	y: 54.8*grid,
+      	text: 'Data Storage Array 2',
+       	fontSize: 2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   	
+
+   	label.dsa3 = new Kinetic.Text({
+   		x: 54.7*grid,
+       	y: 54.8*grid,
+      	text: 'Data Storage Array 3',
+       	fontSize: 2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   	
+
+   	label.dsa4 = new Kinetic.Text({
+   		x: 74.7*grid,
+       	y: 54.8*grid,
+      	text: 'Data Storage Array 4',
+       	fontSize: 2*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   	
+
+   	///////////////////////////////////////////////////////////////////////////
+
+   	label.net1 = new Kinetic.Text({
+   		x: 59*grid,
+       	y: 52*grid,
+      	text: 'Network Switch 1',
+       	fontSize: 1*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   	
+
+   	label.net2 = new Kinetic.Text({
+   		x: 79*grid,
+       	y: 52*grid,
+      	text: 'Network Switch 2',
+       	fontSize: 1*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   	
+
+   	label.net3 = new Kinetic.Text({
+   		x: 99*grid,
+       	y: 52*grid,
+      	text: 'Network Switch 3',
+       	fontSize: 1*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   	
+
+   	label.net4 = new Kinetic.Text({
+   		x: 119*grid,
+       	y: 52*grid,
+      	text: 'Network Switch 4',
+       	fontSize: 1*grid,
+       	fontFamily: 'Calibri',
+       	fill: 'black'
+   	});   	
+
+   	///////////////////////////////////////////////////////////////////////////
+    // The rack text is added to the main layer using the
+    // rackImage.mainLayer.add(...) command.
+    ///////////////////////////////////////////////////////////////////////////
+
+    rackImage.mainLayer.add(label.rack1);
+    rackImage.mainLayer.add(label.rack2);
+    rackImage.mainLayer.add(label.rack3);
+    rackImage.mainLayer.add(label.rack4);
+    rackImage.mainLayer.add(label.rack5);
+
+    rackImage.mainLayer.add(label.hv1);
+    rackImage.mainLayer.add(label.hv2);
+    rackImage.mainLayer.add(label.hv3);
+
+    rackImage.mainLayer.add(label.nim1);
+    rackImage.mainLayer.add(label.nim2);
+    rackImage.mainLayer.add(label.nim3);
+    rackImage.mainLayer.add(label.nim4);
+    rackImage.mainLayer.add(label.nim5);
+    rackImage.mainLayer.add(label.nim6);
+    rackImage.mainLayer.add(label.nim7);
+
+    rackImage.mainLayer.add(label.vme1);
+    rackImage.mainLayer.add(label.vme2);
+    rackImage.mainLayer.add(label.vme3);
+    rackImage.mainLayer.add(label.vme4);
+    rackImage.mainLayer.add(label.vme5);
+    rackImage.mainLayer.add(label.vme6);
+    rackImage.mainLayer.add(label.vme7);
+
+    rackImage.mainLayer.add(label.comp1);
+    rackImage.mainLayer.add(label.comp2);
+
+    rackImage.mainLayer.add(label.dsa1);
+    rackImage.mainLayer.add(label.dsa2);
+    rackImage.mainLayer.add(label.dsa3);
+    rackImage.mainLayer.add(label.dsa4);
+
+    rackImage.mainLayer.add(label.net1);
+    rackImage.mainLayer.add(label.net2);
+    rackImage.mainLayer.add(label.net3);
+    rackImage.mainLayer.add(label.net4);
+
+    ///////////////////////////////////////////////////////////////////////////
+    // This final line draws the objects created in the main layer.
+    ///////////////////////////////////////////////////////////////////////////
 
 	rackImage.mainLayer.draw();
 }
