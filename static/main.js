@@ -6,7 +6,7 @@ function renderRacks(){
 
 	var width = 0.8*window.innerWidth,
 		height = 0.8*window.innerHeight,
-		grid = Math.min(width/67, height/64),
+		grid = Math.min(width/100, height/62),  //20*5 wide, 56+2+2+2 tall
 		rackImage = {},
 		cells = {},
 		label = {},
@@ -43,8 +43,8 @@ function renderRacks(){
 	// The left margin is set so that the racks are centered in the canvas.
 	///////////////////////////////////////////////////////////////////////////
 
-	leftmargin = (width/67)/2;
-	topmargin = (height/64)/2;
+	leftmargin = (width - 100*grid)/2;
+	topmargin = (height - 62*grid)/2;
 
     ///////////////////////////////////////////////////////////////////////////
 	// The cells.racks loop sets up the 5 racks.
@@ -55,7 +55,7 @@ function renderRacks(){
     for (i = 0; i < 5; i++){
 		cells.racks[i] = new Kinetic.Rect({
 			x: leftmargin+20*i*grid,
-			y: topmargin+2.5*grid,
+			y: topmargin+2*grid,
 			width: 20*grid,
 			height: 56*grid,
 			fill: 'white',
@@ -83,7 +83,7 @@ function renderRacks(){
     for (i = 0; i < 5; i++){
 		cells.sensorstop[i] = new Kinetic.Rect({
 			x: leftmargin+(2+20*i)*grid,
-			y: topmargin+0.5*grid,
+			y: topmargin,
 			width: cells.widthsensors,
 			height: cells.heightsensors,
 			fill: cells.fillsensors,
@@ -93,7 +93,7 @@ function renderRacks(){
 		}),
 		cells.sensorsbottom[i] = new Kinetic.Rect({
 			x: leftmargin+(2+20*i)*grid,
-			y: topmargin+58.5*grid,
+			y: topmargin+58*grid,
 			width: cells.widthsensors,
 			height: cells.heightsensors,
 			fill: cells.fillsensors,
@@ -119,7 +119,7 @@ function renderRacks(){
 	for (i = 0; i < 4; i++){
         cells.cableman[i] = new Kinetic.Rect({
             x: leftmargin+20*i*grid,
-            y: topmargin+17.5*grid,
+            y: topmargin+17*grid,
 			width: cells.widthcableman,
 			height: cells.heightcableman,
 			fill: cells.fillcableman,
@@ -132,7 +132,7 @@ function renderRacks(){
 	for (i = 4; i < 8; i++){
         cells.cableman[i] = new Kinetic.Rect({
             x: leftmargin+20*(i-4)*grid,
-            y: topmargin+26.5*grid,
+            y: topmargin+26*grid,
 			width: cells.widthcableman,
 			height: cells.heightcableman,
 			fill: cells.fillcableman,
@@ -145,7 +145,7 @@ function renderRacks(){
 	for (i = 8; i < 10; i++){
         cells.cableman[i] = new Kinetic.Rect({
             x: leftmargin+(40+20*(i-8))*grid,
-            y: topmargin+30.5*grid,
+            y: topmargin+30*grid,
 			width: cells.widthcableman,
 			height: cells.heightcableman,
 			fill: cells.fillcableman,
@@ -158,7 +158,7 @@ function renderRacks(){
 	for (i = 10; i < 12; i++){
         cells.cableman[i] = new Kinetic.Rect({
             x: leftmargin+(40+20*(i-10))*grid,
-            y: topmargin+39.5*grid,
+            y: topmargin+39*grid,
 			width: cells.widthcableman,
 			height: cells.heightcableman,
 			fill: cells.fillcableman,
@@ -171,7 +171,7 @@ function renderRacks(){
 	for (i = 12; i < 14; i++){
         cells.cableman[i] = new Kinetic.Rect({
             x: leftmargin+40*grid,
-            y: topmargin+(41.5+9*(i-12))*grid,
+            y: topmargin+(41+9*(i-12))*grid,
 			width: cells.widthcableman,
 			height: cells.heightcableman,
 			fill: cells.fillcableman,
@@ -183,7 +183,7 @@ function renderRacks(){
 
 	cells.cableman14 = new Kinetic.Rect({
 		x: leftmargin+40*grid,
-		y: topmargin+28.5*grid,
+		y: topmargin+28*grid,
 		width: cells.widthcableman,
 		height: cells.heightcableman,
 		fill: cells.fillcableman,
@@ -208,7 +208,7 @@ function renderRacks(){
 
 	cells.hv0 = new Kinetic.Rect({
 		x: leftmargin,
-		y: topmargin+2.5*grid,
+		y: topmargin+2*grid,
 		width: cells.widthhv,
 		height: cells.heighthv,
 		fill: cells.fillhv,
@@ -219,7 +219,7 @@ function renderRacks(){
 
     label.hv0 = new Kinetic.Text({
    		x: leftmargin,
-       	y: topmargin+2.5*grid,
+       	y: topmargin+2*grid,
        	width: cells.widthhv,
       	text: 'HV 1',
        	fontSize: label.fontsizehv,
@@ -235,7 +235,7 @@ function renderRacks(){
 	for (i = 1; i < 3; i++){
         cells.hv[i] = new Kinetic.Rect({
             x: leftmargin+(60+20*(i-1))*grid,
-            y: topmargin+2.5*grid,
+            y: topmargin+2*grid,
 			width: cells.widthhv,
 			height: cells.heighthv,
 			fill: cells.fillhv,
@@ -245,7 +245,7 @@ function renderRacks(){
 		}),
         label.hv[i] = new Kinetic.Text({
             x: leftmargin+(60+20*(i-1))*grid,
-            y: topmargin+2.5*grid,
+            y: topmargin+2*grid,
             width: cells.widthhv,
             text: 'HV '+(i+1),
             fontSize: label.fontsizehv,
@@ -276,7 +276,7 @@ function renderRacks(){
 	for (i = 0; i < 5; i++){
         cells.nim[i] = new Kinetic.Rect({
             x: leftmargin+20*i*grid,
-            y: topmargin+11.5*grid,
+            y: topmargin+11*grid,
 			width: cells.widthnim,
 			height: cells.heightnim,
 			fill: cells.fillnim,
@@ -286,7 +286,7 @@ function renderRacks(){
 		}),
 		label.nim[i] = new Kinetic.Text({
             x: leftmargin+20*i*grid,
-            y: topmargin+11.5*grid,
+            y: topmargin+11*grid,
             width: cells.widthnim,
             text: 'NIM '+(i+1),
             fontSize: label.fontsizenim,
@@ -300,7 +300,7 @@ function renderRacks(){
 	for (i = 5; i < 7; i++){
 		cells.nim[i] = new Kinetic.Rect({
 			x: leftmargin+60*grid,
-			y: topmargin+(45.5+8*(i-5))*grid,
+			y: topmargin+(45+8*(i-5))*grid,
 			width: cells.widthnim,
 			height: cells.heightnim,
 			fill: cells.fillnim,
@@ -310,7 +310,7 @@ function renderRacks(){
 		}),
         label.nim[i] = new Kinetic.Text({
             x: leftmargin+60*grid,
-            y: topmargin+(45.5+8*(i-5))*grid,
+            y: topmargin+(45+8*(i-5))*grid,
             width: cells.widthnim,
             text: 'NIM '+(i+1),
             fontSize: label.fontsizenim,
@@ -340,7 +340,7 @@ function renderRacks(){
 	for (i = 0; i < 4; i++){
 		cells.vme[i] = new Kinetic.Rect({
 			x: leftmargin+20*i*grid,
-			y: topmargin+18.5*grid,
+			y: topmargin+18*grid,
 			width: cells.widthvme,
 			height: cells.heightvme,
 			fill: cells.fillvme,
@@ -350,7 +350,7 @@ function renderRacks(){
 		}),
 	    label.vme[i] = new Kinetic.Text({
             x: leftmargin+20*i*grid,
-            y: topmargin+18.5*grid,
+            y: topmargin+18*grid,
             width: cells.widthvme,
             text: 'VME '+(i+1),
             fontSize: label.fontsizevme,
@@ -364,7 +364,7 @@ function renderRacks(){
 	for (i = 4; i < 6; i++){
 		cells.vme[i] = new Kinetic.Rect({
 			x: leftmargin+(40+20*(i-4))*grid,
-			y: topmargin+31.5*grid,
+			y: topmargin+31*grid,
 			width: cells.widthvme,
 			height: cells.heightvme,
 			fill: cells.fillvme,
@@ -374,7 +374,7 @@ function renderRacks(){
 		}),
 	    label.vme[i] = new Kinetic.Text({
             x: leftmargin+(40+20*(i-4))*grid,
-            y: topmargin+31.5*grid,
+            y: topmargin+31*grid,
             width: cells.widthvme,
             text: 'VME '+(i+1),
             fontSize: label.fontsizevme,
@@ -387,7 +387,7 @@ function renderRacks(){
 
 	cells.vme6 = new Kinetic.Rect({
 		x: leftmargin+40*grid,
-		y: topmargin+42.5*grid,
+		y: topmargin+42*grid,
 		width: cells.widthvme,
 		height: cells.heightvme,
 		fill: cells.fillvme,
@@ -398,7 +398,7 @@ function renderRacks(){
 
    	label.vme6 = new Kinetic.Text({
    		x: leftmargin+40*grid,
-       	y: topmargin+42.5*grid,
+       	y: topmargin+42*grid,
        	width: cells.widthvme,
       	text: 'VME 7',
        	fontSize: label.fontsizevme,
@@ -427,7 +427,7 @@ function renderRacks(){
 
 	cells.dsa0 = new Kinetic.Rect({
 		x: leftmargin,
-		y: topmargin+45.5*grid,
+		y: topmargin+45*grid,
 		width: cells.widthdsa,
 		height: cells.heightdsa,
 		fill: cells.filldsa,
@@ -438,7 +438,7 @@ function renderRacks(){
 
    	label.dsa0 = new Kinetic.Text({
    		x: leftmargin,
-       	y: topmargin+45.5*grid,
+       	y: topmargin+45*grid,
        	width: cells.widthdsa,
       	text: 'Data Storage Array 1',
        	fontSize: label.fontsizedsa,
@@ -451,7 +451,7 @@ function renderRacks(){
 	for (i = 1; i < 4; i++){
 		cells.dsa[i] = new Kinetic.Rect({
 			x: leftmargin+20*(i-1)*grid,
-			y: topmargin+52.5*grid,
+			y: topmargin+52*grid,
 			width: cells.widthdsa,
 			height: cells.heightdsa,
 			fill: cells.filldsa,
@@ -461,7 +461,7 @@ function renderRacks(){
 		}),
 	    label.dsa[i] = new Kinetic.Text({
             x: leftmargin+20*(i-1)*grid,
-            y: topmargin+52.5*grid,
+            y: topmargin+52*grid,
             width: cells.widthdsa,
             text: 'Data Storage Array ' + (i+1),
             fontSize: label.fontsizedsa,
@@ -491,7 +491,7 @@ function renderRacks(){
 	for (i = 0; i < 4; i++){
 		cells.net[i] = new Kinetic.Rect({
 			x: leftmargin+(20+20*i)*grid,
-			y: topmargin+51.5*grid,
+			y: topmargin+51*grid,
 			width: cells.widthnet,
 			height: cells.heightnet,
 			fill: cells.fillnet,
@@ -501,7 +501,7 @@ function renderRacks(){
 		}),
 	    label.net[i] = new Kinetic.Text({
             x: leftmargin+(20+20*i)*grid,
-            y: topmargin+51.5*grid,
+            y: topmargin+51*grid,
             width: cells.widthnet,
             text: 'Network Switch '+(i+1),
             fontSize: label.fontsizenet,
@@ -530,7 +530,7 @@ function renderRacks(){
 	for (i = 0; i < 2; i++){
 		cells.comp[i] = new Kinetic.Rect({
 			x: leftmargin,
-			y: topmargin+(38.5+3*i)*grid,
+			y: topmargin+(38+3*i)*grid,
 			width: cells.widthcomp,
 			height: cells.heightcomp,
 			fill: cells.fillcomp,
@@ -540,7 +540,7 @@ function renderRacks(){
 		}),
 	    label.comp[i] = new Kinetic.Text({
             x: leftmargin,
-            y: topmargin+(38.5+3.1*i)*grid,
+            y: topmargin+(38+3.1*i)*grid,
             width: cells.widthcomp,
             text: 'Computer '+(i+1),
             fontSize: label.fontsizecomp,
@@ -572,7 +572,7 @@ function renderRacks(){
 	for (i = 0; i < 5; i++){
 		cells.labels[i] = new Kinetic.Rect({
 			x: leftmargin+(6+20*i)*grid,
-			y: topmargin+61*grid,
+			y: topmargin+60*grid,
 			width: cells.widthlab,
 			height: cells.heightlab,
 			fill: cells.filllab,
@@ -581,7 +581,7 @@ function renderRacks(){
 		}),
 		label.racks[i] = new Kinetic.Text({
 			x: leftmargin+(6+20*i)*grid,
-			y: topmargin+61*grid,
+			y: topmargin+60*grid,
 			width: cells.widthlab,
 			text: 'Rack '+(i+1),
 			fontSize: label.fontsizelab,
