@@ -35,18 +35,19 @@
 				var width = 0.8*window.innerWidth,
 					height = 0.8*window.innerHeight,
 					grid = Math.min(width/100, height/62),  //20*5 wide, 56+2+2+2 tall
-					rackImage = {},
 					cells = {},
 					label = {},
 					leftmargin = {},
 					topmargin = {},
 					i;
 
+				this.rackImage = {};
+
 			    ///////////////////////////////////////////////////////////////////////////
 			    // Kinetic.js is setup to create the initial environment.
 			    ///////////////////////////////////////////////////////////////////////////
 
-				rackImage.stage = new Kinetic.Stage({
+				this.rackImage.stage = new Kinetic.Stage({
 			        container: 'shackStatus',
 			        width: width,
 			        height: height
@@ -57,8 +58,8 @@
 				// crates for the shack.
 			    ///////////////////////////////////////////////////////////////////////////
 
-				rackImage.mainLayer = new Kinetic.Layer();
-				rackImage.stage.add(rackImage.mainLayer);
+				this.rackImage.mainLayer = new Kinetic.Layer();
+				this.rackImage.stage.add(this.rackImage.mainLayer);
 
 				///////////////////////////////////////////////////////////////////////////
 				// The font type and colour is set as standard for all labels.
@@ -118,8 +119,13 @@
 						fill: cells.fillsensors,
 						stroke: cells.strokesensors,
 						strokeWidth: cells.strokeWsensors,
-						opacity: cells.opacitysensors
+						opacity: cells.opacitysensors,
+						listening: true
 					}),
+					cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, {'text': 'test', 'value': 1337}) );
+					cells.sensorstop[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+
 					cells.sensorsbottom[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin+60*grid,
@@ -624,59 +630,98 @@
 			    ///////////////////////////////////////////////////////////////////////////
 
 				for (i = 0; i < 5; i++)
-					rackImage.mainLayer.add(cells.racks[i]);
+					this.rackImage.mainLayer.add(cells.racks[i]);
 
 				for (i = 0; i < 5; i++)
-					rackImage.mainLayer.add(cells.sensorstop[i]), 
-					rackImage.mainLayer.add(cells.sensorsbottom[i]);
+					this.rackImage.mainLayer.add(cells.sensorstop[i]), 
+					this.rackImage.mainLayer.add(cells.sensorsbottom[i]);
 
 				for (i = 0; i < 14; i++)
-					rackImage.mainLayer.add(cells.cableman[i]);
+					this.rackImage.mainLayer.add(cells.cableman[i]);
 
-				rackImage.mainLayer.add(cells.cableman14);
+				this.rackImage.mainLayer.add(cells.cableman14);
 
-				rackImage.mainLayer.add(cells.hv0);
-			    rackImage.mainLayer.add(label.hv0);
+				this.rackImage.mainLayer.add(cells.hv0);
+			    this.rackImage.mainLayer.add(label.hv0);
 
 				for (i = 1; i < 3; i++)
-					rackImage.mainLayer.add(cells.hv[i]),
-					rackImage.mainLayer.add(label.hv[i]);
+					this.rackImage.mainLayer.add(cells.hv[i]),
+					this.rackImage.mainLayer.add(label.hv[i]);
 
 				for (i = 0; i < 7; i++)
-					rackImage.mainLayer.add(cells.nim[i]),
-					rackImage.mainLayer.add(label.nim[i]);
+					this.rackImage.mainLayer.add(cells.nim[i]),
+					this.rackImage.mainLayer.add(label.nim[i]);
 
 				for (i = 0; i < 6; i++)
-					rackImage.mainLayer.add(cells.vme[i]),
-				    rackImage.mainLayer.add(label.vme[i]);
+					this.rackImage.mainLayer.add(cells.vme[i]),
+				    this.rackImage.mainLayer.add(label.vme[i]);
 
-				rackImage.mainLayer.add(cells.vme6);
-			    rackImage.mainLayer.add(label.vme6);
+				this.rackImage.mainLayer.add(cells.vme6);
+			    this.rackImage.mainLayer.add(label.vme6);
 
-				rackImage.mainLayer.add(cells.dsa0);
-			    rackImage.mainLayer.add(label.dsa0);
+				this.rackImage.mainLayer.add(cells.dsa0);
+			    this.rackImage.mainLayer.add(label.dsa0);
 
 				for (i = 1; i < 4; i++)
-					rackImage.mainLayer.add(cells.dsa[i]),
-					rackImage.mainLayer.add(label.dsa[i]);
+					this.rackImage.mainLayer.add(cells.dsa[i]),
+					this.rackImage.mainLayer.add(label.dsa[i]);
 
 				for (i = 0; i < 4; i++)
-					rackImage.mainLayer.add(cells.net[i]),
-				    rackImage.mainLayer.add(label.net[i]);
+					this.rackImage.mainLayer.add(cells.net[i]),
+				    this.rackImage.mainLayer.add(label.net[i]);
 
 				for (i = 0; i < 2; i++)
-					rackImage.mainLayer.add(cells.comp[i]),
-					rackImage.mainLayer.add(label.comp[i]);
+					this.rackImage.mainLayer.add(cells.comp[i]),
+					this.rackImage.mainLayer.add(label.comp[i]);
 
 				for (i = 0; i < 5; i++)
-					//rackImage.mainLayer.add(cells.labels[i]),
-					rackImage.mainLayer.add(label.racks[i]);
+					//this.rackImage.mainLayer.add(cells.labels[i]),
+					this.rackImage.mainLayer.add(label.racks[i]);
 
 				///////////////////////////////////////////////////////////////////////////
 				// The final command draws all of the objects and text onto the main layer.
 				///////////////////////////////////////////////////////////////////////////
 
-				rackImage.mainLayer.draw();
+				this.rackImage.mainLayer.draw();
+			},
+
+			'moveTooltip' : function(){
+				var tt = document.getElementById('tooltip'),
+					mousePos = this.rackImage.stage.getPointerPosition(),
+					offsetTop = 0, offsetLeft = 0,
+					left = mousePos.x,
+					top = mousePos.y,
+					element = this;
+
+				do{
+					offsetTop += element.offsetTop || 0;
+					offsetLeft += element.offsetLeft || 0;
+					element = element.offsetParent;
+				} while(element)
+
+				left += offsetLeft;
+				top += offsetTop;
+
+				tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
+			},
+
+			'writeTooltip' : function(payload){
+				var tt = document.getElementById('tooltip'),
+					content = document.createElement('p'),
+					key, text;
+
+				if(payload == -1){
+					tt.setAttribute('style', 'display:none');
+				} else {
+					text = 'data payload: '
+					for(key in payload){
+						text += '<br>' + key + ': ' + payload[key];
+					}
+
+					content.innerHTML = text;
+					tt.innerHTML = '';
+					tt.appendChild(content);
+				}
 			}
         }
     });
