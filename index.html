@@ -18,7 +18,7 @@
 			<div id='mainContent'>
 				<!--All your DOM elements go here-->
 				<div id='tooltip'></div>
-				<widget-Shack SOH='http://grifsoh00.triumf.ca:8081/'></widget-Shack>
+				<widget-Shack id='shackStatus' SOH='http://grifsoh00.triumf.ca:8081'></widget-Shack>
 			</div>
 
 			<div id='push'></div>
@@ -28,7 +28,7 @@
 
 		<script>
 			document.addEventListener('DOMComponentsLoaded', function(){
-
+				document.getElementById('shackStatus').update()
 			});
 		</script>
 

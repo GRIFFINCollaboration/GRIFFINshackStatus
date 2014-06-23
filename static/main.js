@@ -12,6 +12,8 @@
 
             	this.renderRacks();
                 
+
+                //this.update();
             },
             inserted: function() {},
             removed: function() {},
@@ -792,6 +794,16 @@
 					tt.innerHTML = '';
 					tt.appendChild(content);
 				}
+			},
+
+			'update' : function(){
+				XHR(this.SOH+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', this.routeData, false, true);				
+			}, 
+
+			'routeData' : function(response){
+				var data = JSON.parse(response);
+
+				console.log(data)
 			}
         }
     });
@@ -803,4 +815,20 @@ function squishFont(string, maxWidth){
     while(string.getTextWidth() > maxWidth){
         string.setAttr('fontSize', string.getAttr('fontSize') - 1);
     }
+}
+
+function XHR(URL, callback, mime, noCredentials){
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function(){
+        if(this.readyState != 4) return;
+        callback(this.responseText);
+    }
+
+    if(!noCredentials)
+        xmlhttp.withCredentials = true;
+    if(mime)
+        xmlhttp.overrideMimeType(mime);
+    xmlhttp.open('GET', URL);
+    xmlhttp.send();   
 }
