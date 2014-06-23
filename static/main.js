@@ -37,6 +37,7 @@
 					grid = Math.min(width/100, height/62),  //20*5 wide, 56+2+2+2 tall
 					cells = {},
 					label = {},
+					ttcontent = {},
 					leftmargin = {},
 					topmargin = {},
 					i;
@@ -110,6 +111,16 @@
 				cells.strokeWsensors = 2;
 				cells.opacitysensors = 0.6;
 
+				///////////////////////////////////////////////////////////////////////////
+				// Setting the content of the temperature sensor tooltip.
+				///////////////////////////////////////////////////////////////////////////
+
+				ttcontent.sensor = [];
+
+				for (i = 0; i < 11; i++)
+					ttcontent.sensor[i] = 'Sensor ' + i;
+				
+
 			    for (i = 0; i < 5; i++){
 					cells.sensorstop[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
@@ -119,10 +130,9 @@
 						fill: cells.fillsensors,
 						stroke: cells.strokesensors,
 						strokeWidth: cells.strokeWsensors,
-						opacity: cells.opacitysensors,
-						listening: true
+						opacity: cells.opacitysensors
 					}),
-					cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, {'text': 'test', 'value': 1337}) );
+					cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, {'sensorIndex':ttcontent.sensor[2*i+1]} ) );
 					cells.sensorstop[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
@@ -135,7 +145,10 @@
 						stroke: cells.strokesensors,
 						strokeWidth: cells.strokeWsensors,
 						opacity: cells.opacitysensors
-					});
+					}),
+					cells.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, {'sensorIndex':ttcontent.sensor[2*(i+1)]}) );
+					cells.sensorsbottom[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 				}
 
 			    ///////////////////////////////////////////////////////////////////////////
@@ -240,8 +253,10 @@
 				cells.strokeWhv = 2;
 				cells.opacityhv = 0.6;
 
+				ttcontent.hv0 = 'HV Crate 1';
+
 				cells.hv0 = new Kinetic.Rect({
-					x: leftmargin,
+					x: leftmargin + 20*grid,
 					y: topmargin+4*grid,
 					width: cells.widthhv,
 					height: cells.heighthv,
@@ -252,7 +267,7 @@
 				});
 
 			    label.hv0 = new Kinetic.Text({
-			   		x: leftmargin,
+			   		x: leftmargin + 20*grid,
 			       	y: topmargin+4*grid,
 			       	width: cells.widthhv,
 			      	text: 'HV 1',
@@ -262,10 +277,18 @@
 			       	padding: cells.heighthv*0.3,
 			        align: 'center'
 			   	});
+
+				cells.hv0.on('mouseover', this.writeTooltip.bind(this, {'HVIndex':ttcontent.hv0} ) );
+				cells.hv0.on('mousemove', this.moveTooltip.bind(this, false));
+				cells.hv0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.hv0, 18*grid);
 
 				cells.hv = [];
 				label.hv = [];
+				ttcontent.hv = [];
+
+				for (i = 1; i < 3; i++)
+					ttcontent.hv[i] = 'HV Crate ' + (i+1);
 
 				for (i = 1; i < 3; i++){
 			        cells.hv[i] = new Kinetic.Rect({
@@ -289,7 +312,10 @@
 			            padding: cells.heighthv*0.3,
 			            align: 'center'
 			      	});
-			      	squishFont(label.hv[i], 18*grid);
+			      	cells.hv[i].on('mouseover', this.writeTooltip.bind(this, {'HVIndex':ttcontent.hv[i]} ) );
+					cells.hv[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.hv[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+					squishFont(label.hv[i], 18*grid);
 				}
 
 				///////////////////////////////////////////////////////////////////////////
@@ -307,6 +333,10 @@
 
 				cells.nim = [];
 				label.nim =[];
+				ttcontent.nim= [];
+
+				for (i = 0; i < 7; i++)
+					ttcontent.nim[i] = 'NIM Crate ' + (i+1);
 
 				for (i = 0; i < 5; i++){
 			        cells.nim[i] = new Kinetic.Rect({
@@ -330,6 +360,9 @@
 			            padding: cells.heightnim*0.25,
 			            align: 'center'
 			        });
+			        cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
+					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.nim[i], 18*grid);
 				} 
 
@@ -355,6 +388,9 @@
 			            padding: cells.heightnim*0.25,
 			            align: 'center'
 			      	});
+			      	cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
+					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.nim[i], 18*grid);
 				}
 
@@ -372,6 +408,12 @@
 
 				cells.vme = [];
 				label.vme = [];
+				ttcontent.vme = [];
+
+				for (i = 0; i < 6; i++)
+					ttcontent.vme[i] = 'VME Crate ' + (i+1);
+
+				ttcontent.vme6 = 'VME Crate 7';
 
 				for (i = 0; i < 4; i++){
 					cells.vme[i] = new Kinetic.Rect({
@@ -395,6 +437,9 @@
 			            padding: cells.heightvme*0.3,
 			       		align: 'center'
 			      	});
+			      	cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
+					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.vme[i], 18*grid);
 				}   
 
@@ -420,6 +465,9 @@
 			            padding: cells.heightvme*0.3,
 			       		align: 'center'
 			     	 });
+				    cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
+					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 				    squishFont(label.vme[i], 18*grid);
 				}   
 
@@ -445,6 +493,9 @@
 			       	padding: cells.heightvme*0.3,
 			       	align: 'center'
 			   	});
+ 		      	cells.vme6.on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme6} ) );
+				cells.vme6.on('mousemove', this.moveTooltip.bind(this, false));
+				cells.vme6.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.vme6, 18*grid);
 
 
@@ -462,6 +513,12 @@
 
 				cells.dsa = [];
 			   	label.dsa = [];
+			   	ttcontent.dsa = [];
+
+			   	ttcontent.dsa0 = 'Data Storage Array 1'
+
+			   	for (i = 1; i < 4; i++)
+			   		ttcontent.dsa[i] = 'Data Storage Array ' + (i+1);
 
 				cells.dsa0 = new Kinetic.Rect({
 					x: leftmargin,
@@ -485,6 +542,9 @@
 			       	padding: cells.heightdsa*0.25,
 			        align: 'center'
 			   	});
+			    cells.dsa0.on('mouseover', this.writeTooltip.bind(this, {'DSAIndex':ttcontent.dsa0} ) );
+				cells.dsa0.on('mousemove', this.moveTooltip.bind(this, false));
+				cells.dsa0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.dsa0, 18*grid);
 
 				for (i = 1; i < 4; i++){
@@ -507,8 +567,12 @@
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
 			            padding: cells.heightdsa*0.25,
-			            align: 'center'
+			            align: 'center',
+			            listening: false
 			        });
+			        cells.dsa[i].on('mouseover', this.writeTooltip.bind(this, {'DSAIndex':ttcontent.dsa[i]} ) );
+					cells.dsa[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.dsa[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.dsa[i], 18*grid);
 				}     
 
@@ -565,6 +629,10 @@
 
 				cells.comp = [];
 			   	label.comp = [];
+			   	ttcontent.comp = [];
+
+			   	for (i = 0; i < 2; i++)
+			   		ttcontent.comp[i] = 'Computer ' + (i+1);
 
 				for (i = 0; i < 2; i++){
 					cells.comp[i] = new Kinetic.Rect({
@@ -588,6 +656,9 @@
 			            padding: cells.heightcomp*0.03,
 			            align: 'center'
 			        });
+			        cells.comp[i].on('mouseover', this.writeTooltip.bind(this, {'ComputerIndex':ttcontent.comp[i]} ) );
+					cells.comp[i].on('mousemove', this.moveTooltip.bind(this, false));
+					cells.comp[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.comp[i], 18*grid);
 				}   
 
@@ -633,7 +704,7 @@
 					this.rackImage.mainLayer.add(cells.racks[i]);
 
 				for (i = 0; i < 5; i++)
-					this.rackImage.mainLayer.add(cells.sensorstop[i]), 
+					this.rackImage.mainLayer.add(cells.sensorstop[i]),
 					this.rackImage.mainLayer.add(cells.sensorsbottom[i]);
 
 				for (i = 0; i < 14; i++)
@@ -675,7 +746,6 @@
 					this.rackImage.mainLayer.add(label.comp[i]);
 
 				for (i = 0; i < 5; i++)
-					//this.rackImage.mainLayer.add(cells.labels[i]),
 					this.rackImage.mainLayer.add(label.racks[i]);
 
 				///////////////////////////////////////////////////////////////////////////
@@ -713,7 +783,7 @@
 				if(payload == -1){
 					tt.setAttribute('style', 'display:none');
 				} else {
-					text = 'data payload: '
+					text = 'Data Payload '
 					for(key in payload){
 						text += '<br>' + key + ': ' + payload[key];
 					}
