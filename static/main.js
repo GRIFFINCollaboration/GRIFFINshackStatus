@@ -130,7 +130,7 @@
 						fill: cells.fillsensors,
 						stroke: cells.strokesensors,
 						strokeWidth: cells.strokeWsensors,
-						opacity: cells.opacitysensors
+						opacity: cells.opacitysensors,
 					}),
 					cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, {'sensorIndex':ttcontent.sensor[2*i+1]} ) );
 					cells.sensorstop[i].on('mousemove', this.moveTooltip.bind(this, false));
@@ -144,12 +144,44 @@
 						fill: cells.fillsensors,
 						stroke: cells.strokesensors,
 						strokeWidth: cells.strokeWsensors,
-						opacity: cells.opacitysensors
+						opacity: cells.opacitysensors,
 					}),
 					cells.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, {'sensorIndex':ttcontent.sensor[2*(i+1)]}) );
 					cells.sensorsbottom[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 				}
+
+				///////////////////////////////////////////////////////////////
+				// Formulate the tooltip text for cell i and write it on the 
+				// tooltip layer.
+				///////////////////////////////////////////////////////////////
+
+//            	'writeTooltip': function(i){
+//                	var text, value, j;
+//
+//                	if(i!=-1){
+//                    	text = this.channelNames[i];
+//
+//                    	for(j=0; j<this.views.length; j++){
+//                    	    text += '\n'+this.viewLabels[j]+': ';
+//                        	value = window.currentData[this.views[j]][this.channelNames[i]];
+//                        	text += scrubNumber(value);
+//                    	}
+//                	} else {
+//                	    text = '';
+//                	}
+//                	this.lastTTindex = i;
+//                	this.text[this.displayIndex].setText(text);
+//                	if(text != ''){
+//                	    //adjust the background size
+//                	    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
+//                	    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 );
+//                	} else {
+//                	    this.TTbkg[this.displayIndex].setAttr('width', 0);
+//                	    this.TTbkg[this.displayIndex].setAttr('height', 0);
+//                	}
+//                	this.tooltipLayer[this.displayIndex].draw();
+//            	},
 
 			    ///////////////////////////////////////////////////////////////////////////
 			    // Cable management sections are added.
@@ -275,7 +307,8 @@
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
 			       	padding: cells.heighthv*0.3,
-			        align: 'center'
+			        align: 'center',
+			        listening: false
 			   	});
 
 				cells.hv0.on('mouseover', this.writeTooltip.bind(this, {'HVIndex':ttcontent.hv0} ) );
@@ -310,7 +343,8 @@
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
 			            padding: cells.heighthv*0.3,
-			            align: 'center'
+			            align: 'center',
+			            listening: false
 			      	});
 			      	cells.hv[i].on('mouseover', this.writeTooltip.bind(this, {'HVIndex':ttcontent.hv[i]} ) );
 					cells.hv[i].on('mousemove', this.moveTooltip.bind(this, false));
@@ -358,7 +392,8 @@
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
 			            padding: cells.heightnim*0.25,
-			            align: 'center'
+			            align: 'center',
+			            listening: false
 			        });
 			        cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
 					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
@@ -386,7 +421,8 @@
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
 			            padding: cells.heightnim*0.25,
-			            align: 'center'
+			            align: 'center',
+			            listening: false
 			      	});
 			      	cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
 					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
@@ -435,7 +471,8 @@
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
 			            padding: cells.heightvme*0.3,
-			       		align: 'center'
+			       		align: 'center',
+			       		listening: false
 			      	});
 			      	cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
 					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
@@ -463,7 +500,8 @@
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
 			            padding: cells.heightvme*0.3,
-			       		align: 'center'
+			       		align: 'center',
+			       		listening: false
 			     	 });
 				    cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
 					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
@@ -491,7 +529,8 @@
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
 			       	padding: cells.heightvme*0.3,
-			       	align: 'center'
+			       	align: 'center',
+			       	listening: false
 			   	});
  		      	cells.vme6.on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme6} ) );
 				cells.vme6.on('mousemove', this.moveTooltip.bind(this, false));
@@ -540,7 +579,8 @@
 			       	fontFamily: label.font,
 			       	fill: label.fontcolour,
 			       	padding: cells.heightdsa*0.25,
-			        align: 'center'
+			        align: 'center',
+			        listening: false
 			   	});
 			    cells.dsa0.on('mouseover', this.writeTooltip.bind(this, {'DSAIndex':ttcontent.dsa0} ) );
 				cells.dsa0.on('mousemove', this.moveTooltip.bind(this, false));
@@ -610,7 +650,8 @@
 			            fontSize: label.maxFontSize/2,
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
-			            align: 'center'
+			            align: 'center',
+			            listening: false
 			        });
 			        squishFont(label.net[i], 18*grid);
 				}   
@@ -654,7 +695,8 @@
 			            fontFamily: label.font,
 			            fill: label.fontcolour,
 			            padding: cells.heightcomp*0.03,
-			            align: 'center'
+			            align: 'center',
+			            listening: false
 			        });
 			        cells.comp[i].on('mouseover', this.writeTooltip.bind(this, {'ComputerIndex':ttcontent.comp[i]} ) );
 					cells.comp[i].on('mousemove', this.moveTooltip.bind(this, false));
