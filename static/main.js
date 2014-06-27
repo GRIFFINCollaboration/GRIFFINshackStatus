@@ -6,7 +6,7 @@
             created: function() {
             	var shackWrap = document.createElement('div');
 
-            	shackWrap.setAttribute('id', 'shackStatus');
+            	shackWrap.setAttribute('id', 'shackStatusWrap');
             	this.appendChild(shackWrap);
 
 
@@ -51,7 +51,7 @@
 			    ///////////////////////////////////////////////////////////////////////////
 
 				this.rackImage.stage = new Kinetic.Stage({
-			        container: 'shackStatus',
+			        container: 'shackStatusWrap',
 			        width: width,
 			        height: height
 			    });
