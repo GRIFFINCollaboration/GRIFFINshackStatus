@@ -4,33 +4,45 @@
         extends: 'div',
         lifecycle: {
             created: function() {
-            	var shackWrap = document.createElement('div');
+            	var shackWrap = document.createElement('div'),
+            		i;
 
             	shackWrap.setAttribute('id', 'shackStatusWrap');
             	this.appendChild(shackWrap);
 
+            	///////////////////////////////////////////////////////////////////
+            	// tooltipContent is a table of objects for populating the tooltip.
+            	// structure: {key: value}
+            	// indices 0-4: top temperature sensors
+            	// 5-9: bottom temperature sensors
+            	///////////////////////////////////////////////////////////////////
 
+            	this.tooltipContent = [];
+            	this.flag = [];
+        
             	this.renderRacks();
-                
-
-                //this.update();
+                this.update();
             },
+
             inserted: function() {},
             removed: function() {},
             attributeChanged: function() {}
         }, 
-        events: { 
 
+        events: { 
         },
+
         accessors: {
             'SOH':{
                 attribute: {} //this just needs to be declared
             }
         }, 
+
         methods: {
-			///////////////////////////////////////////////////////////////////////////
+
+			////////////////////////////////////////////////////////////////////////
 			// This function constructs the GRIFFIN electronics shack web interface.
-			///////////////////////////////////////////////////////////////////////////
+			////////////////////////////////////////////////////////////////////////
 
 			'renderRacks' : function(){
 
@@ -46,9 +58,9 @@
 
 				this.rackImage = {};
 
-			    ///////////////////////////////////////////////////////////////////////////
+			    /////////////////////////////////////////////////////////
 			    // Kinetic.js is setup to create the initial environment.
-			    ///////////////////////////////////////////////////////////////////////////
+			    /////////////////////////////////////////////////////////
 
 				this.rackImage.stage = new Kinetic.Stage({
 			        container: 'shackStatusWrap',
@@ -56,32 +68,32 @@
 			        height: height
 			    });
 
-				///////////////////////////////////////////////////////////////////////////
-				// The main layer is made which will contain all of the fixed racks and
-				// crates for the shack.
-			    ///////////////////////////////////////////////////////////////////////////
+				////////////////////////////////////////////////////////
+				// The main layer is made which will contain all of the
+				// fixed racks and crates for the shack.
+			    ////////////////////////////////////////////////////////
 
 				this.rackImage.mainLayer = new Kinetic.Layer();
 				this.rackImage.stage.add(this.rackImage.mainLayer);
 
-				///////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////
 				// The font type and colour is set as standard for all labels.
-				///////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////
 
 				label.font = 'Arial';
 				label.fontcolour = 'black';
 				label.maxFontSize = 2*grid;
 
-				///////////////////////////////////////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////
 				// The left margin is set so that the racks are centered in the canvas.
-				///////////////////////////////////////////////////////////////////////////
+				///////////////////////////////////////////////////////////////////////
 
 				leftmargin = (width - 100*grid)/2;
 				topmargin = (height - 62*grid)/2;
 
-			    ///////////////////////////////////////////////////////////////////////////
+			    ////////////////////////////////////////////
 				// The cells.racks loop sets up the 5 racks.
-			    ///////////////////////////////////////////////////////////////////////////
+			    ////////////////////////////////////////////
 
 			   	cells.racks = [];
 
@@ -98,32 +110,27 @@
 					});
 				}    
 
-			    ///////////////////////////////////////////////////////////////////////////
+			    //////////////////////////////////////////////////////////////////////////
 				// The temperature sensors are located at the top and bottom of the racks
 				// with cells.sensorstop at the top and cells.sensorsbottom at the bottom.
-			    ///////////////////////////////////////////////////////////////////////////
+			    //////////////////////////////////////////////////////////////////////////
 
 			    cells.sensorstop = [];
 			    cells.sensorsbottom = [];
 
 			    cells.widthsensors = 16*grid;
 				cells.heightsensors = 2*grid;
-				cells.fillsensors = 'lightgray';
 				cells.strokesensors = 'black';
 				cells.strokeWsensors = 2;
+				cells.fillsensors = 'lightgray';
 				cells.opacitysensors = 0.6;
 
-				///////////////////////////////////////////////////////////////////////////
+				/////////////////////////////////////////////////////////
 				// Setting the content of the temperature sensor tooltip.
-				///////////////////////////////////////////////////////////////////////////
-
-				ttcontent.sensor = [];
-
-				for (i = 0; i < 11; i++)
-					ttcontent.sensor[i] = 'Sensor ' + i;
-				
+				/////////////////////////////////////////////////////////				
 
 			    for (i = 0; i < 5; i++){
+
 					cells.sensorstop[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin + 2*grid,
@@ -134,7 +141,8 @@
 						strokeWidth: cells.strokeWsensors,
 						opacity: cells.opacitysensors,
 					}),
-					cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, {'sensorIndex':ttcontent.sensor[2*i+1]} ) );
+
+					cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
 					cells.sensorstop[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
@@ -148,46 +156,26 @@
 						strokeWidth: cells.strokeWsensors,
 						opacity: cells.opacitysensors,
 					}),
-					cells.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, {'sensorIndex':ttcontent.sensor[2*(i+1)]}) );
+
+					cells.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
 					cells.sensorsbottom[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+
+
+				//	for(i = 0; i < 5; i++){
+				//		if (this.flag[i] == 1){
+			    //			cells.sensorstop[i].setFill = 'red'
+			   	//		}
+			   	//		if (this.flag[i+5] == 1){
+			   	//			cells.sensorsbottom[i].setFill = 'red'
+			   	//		}
+			   	//	}
+
 				}
 
-				///////////////////////////////////////////////////////////////
-				// Formulate the tooltip text for cell i and write it on the 
-				// tooltip layer.
-				///////////////////////////////////////////////////////////////
-
-//            	'writeTooltip': function(i){
-//                	var text, value, j;
-//
-//                	if(i!=-1){
-//                    	text = this.channelNames[i];
-//
-//                    	for(j=0; j<this.views.length; j++){
-//                    	    text += '\n'+this.viewLabels[j]+': ';
-//                        	value = window.currentData[this.views[j]][this.channelNames[i]];
-//                        	text += scrubNumber(value);
-//                    	}
-//                	} else {
-//                	    text = '';
-//                	}
-//                	this.lastTTindex = i;
-//                	this.text[this.displayIndex].setText(text);
-//                	if(text != ''){
-//                	    //adjust the background size
-//                	    this.TTbkg[this.displayIndex].setAttr( 'width', this.text[this.displayIndex].getAttr('width') + 20 );
-//                	    this.TTbkg[this.displayIndex].setAttr( 'height', this.text[this.displayIndex].getAttr('height') + 20 );
-//                	} else {
-//                	    this.TTbkg[this.displayIndex].setAttr('width', 0);
-//                	    this.TTbkg[this.displayIndex].setAttr('height', 0);
-//                	}
-//                	this.tooltipLayer[this.displayIndex].draw();
-//            	},
-
-			    ///////////////////////////////////////////////////////////////////////////
+			    ///////////////////////////////////////
 			    // Cable management sections are added.
-			    ///////////////////////////////////////////////////////////////////////////
+			    ///////////////////////////////////////
 
 			   	cells.widthcableman = 20*grid;
 			   	cells.heightcableman = 1*grid;
@@ -274,10 +262,10 @@
 					opacity: cells.opacitycableman
 				});
 
-				///////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////////////
 				// The 3 HV crates are added next and numbered from left to right then
 				// descending.
-				///////////////////////////////////////////////////////////////////////////	
+				//////////////////////////////////////////////////////////////////////	
 
 				cells.widthhv = 20*grid;
 				cells.heighthv = 8*grid;
@@ -336,6 +324,7 @@
 						strokeWidth: cells.strokeWhv,
 						opacity: cells.opacityhv
 					}),
+
 			        label.hv[i] = new Kinetic.Text({
 			            x: leftmargin+(60+20*(i-1))*grid,
 			            y: topmargin+4*grid,
@@ -348,16 +337,16 @@
 			            align: 'center',
 			            listening: false
 			      	});
+
 			      	cells.hv[i].on('mouseover', this.writeTooltip.bind(this, {'HVIndex':ttcontent.hv[i]} ) );
 					cells.hv[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.hv[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 					squishFont(label.hv[i], 18*grid);
 				}
 
-				///////////////////////////////////////////////////////////////////////////
-				// NIM crates are included next and numbered in the same way as the HV
-				// crates.
-				///////////////////////////////////////////////////////////////////////////	
+				//////////////////////////////////////////////////////////////////////////////
+				// NIM crates are included next and numbered in the same way as the HV crates.
+				//////////////////////////////////////////////////////////////////////////////
 
 				cells.widthnim = 20*grid;
 				cells.heightnim = 5*grid;
@@ -385,6 +374,7 @@
 						strokeWidth: cells.strokeWnim,
 						opacity: cells.opacitynim
 					}),
+
 					label.nim[i] = new Kinetic.Text({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+13*grid,
@@ -397,6 +387,7 @@
 			            align: 'center',
 			            listening: false
 			        });
+
 			        cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
 					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
@@ -414,6 +405,7 @@
 						strokeWidth: cells.strokeWnim,
 						opacity: cells.opacitynim
 					}),
+
 			        label.nim[i] = new Kinetic.Text({
 			            x: leftmargin+60*grid,
 			            y: topmargin+(47+8*(i-5))*grid,
@@ -426,15 +418,16 @@
 			            align: 'center',
 			            listening: false
 			      	});
+
 			      	cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
 					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.nim[i], 18*grid);
 				}
 
-				///////////////////////////////////////////////////////////////////////////
+				////////////////////////////////////////////////////
 				// VME crates are added next and numbered as before.
-				///////////////////////////////////////////////////////////////////////////	
+				////////////////////////////////////////////////////	
 
 				cells.widthvme = 20*grid;
 				cells.heightvme = 8*grid;
@@ -464,6 +457,7 @@
 						strokeWidth: cells.strokeWvme,
 						opacity: cells.opacityvme
 					}),
+
 				    label.vme[i] = new Kinetic.Text({
 			            x: leftmargin+20*i*grid,
 			            y: topmargin+20*grid,
@@ -476,6 +470,7 @@
 			       		align: 'center',
 			       		listening: false
 			      	});
+
 			      	cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
 					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
@@ -493,6 +488,7 @@
 						strokeWidth: cells.strokeWvme,
 						opacity: cells.opacityvme
 					}),
+
 				    label.vme[i] = new Kinetic.Text({
 			            x: leftmargin+(40+20*(i-4))*grid,
 			            y: topmargin+33*grid,
@@ -505,6 +501,7 @@
 			       		align: 'center',
 			       		listening: false
 			     	 });
+
 				    cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
 					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
@@ -534,15 +531,16 @@
 			       	align: 'center',
 			       	listening: false
 			   	});
+
  		      	cells.vme6.on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme6} ) );
 				cells.vme6.on('mousemove', this.moveTooltip.bind(this, false));
 				cells.vme6.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.vme6, 18*grid);
 
 
-				///////////////////////////////////////////////////////////////////////////
+				/////////////////////////////////////////////////////////
 				// Data storage arrays are added, all numbered as before.
-				///////////////////////////////////////////////////////////////////////////
+				/////////////////////////////////////////////////////////
 
 				cells.widthdsa = 20*grid;
 				cells.heightdsa = 6*grid;
@@ -584,6 +582,7 @@
 			        align: 'center',
 			        listening: false
 			   	});
+
 			    cells.dsa0.on('mouseover', this.writeTooltip.bind(this, {'DSAIndex':ttcontent.dsa0} ) );
 				cells.dsa0.on('mousemove', this.moveTooltip.bind(this, false));
 				cells.dsa0.on('mouseout', this.writeTooltip.bind(this, -1) );
@@ -600,6 +599,7 @@
 						strokeWidth: cells.strokeWdsa,
 						opacity: cells.opacitydsa
 					}),
+
 				    label.dsa[i] = new Kinetic.Text({
 			            x: leftmargin+20*(i-1)*grid,
 			            y: topmargin+54*grid,
@@ -612,15 +612,16 @@
 			            align: 'center',
 			            listening: false
 			        });
+
 			        cells.dsa[i].on('mouseover', this.writeTooltip.bind(this, {'DSAIndex':ttcontent.dsa[i]} ) );
 					cells.dsa[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.dsa[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.dsa[i], 18*grid);
 				}     
 
-				///////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////////
 				// The network switches are added and numbered from left to right.
-				///////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////////
 
 				cells.widthnet = 20*grid;
 				cells.heightnet = 1*grid;
@@ -644,6 +645,7 @@
 						strokeWidth: cells.strokeWnet,
 						opacity: cells.opacitynet
 					}),
+
 				    label.net[i] = new Kinetic.Text({
 			            x: leftmargin+(20+20*i)*grid,
 			            y: topmargin+53*grid,
@@ -655,12 +657,13 @@
 			            align: 'center',
 			            listening: false
 			        });
+
 			        squishFont(label.net[i], 18*grid);
 				}   
 
-				///////////////////////////////////////////////////////////////////////////////
+				/////////////////////////////////////////
 				// The 2 computers are added into rack 1.
-				///////////////////////////////////////////////////////////////////////////////
+				/////////////////////////////////////////
 
 				cells.widthcomp = 20*grid;
 				cells.heightcomp = 2*grid;
@@ -688,6 +691,7 @@
 						strokeWidth: cells.strokeWcomp,
 						opacity: cells.opacitycomp
 					}),
+
 				    label.comp[i] = new Kinetic.Text({
 			            x: leftmargin,
 			            y: topmargin+(40+3.1*i)*grid,
@@ -700,18 +704,19 @@
 			            align: 'center',
 			            listening: false
 			        });
+
 			        cells.comp[i].on('mouseover', this.writeTooltip.bind(this, {'ComputerIndex':ttcontent.comp[i]} ) );
 					cells.comp[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.comp[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.comp[i], 18*grid);
 				}   
 
-				///////////////////////////////////////////////////////////////////////////
+				/////////////////////////////////////////////////////////////////////////
 				// In order to make this interface user-friendly, each rack is given a
 				// label so that it is clear what crates, switches and cables are located
 				// where. The interface visualises how the shack looks from the front and 
 				// the racks are correspondingly labelled from left to right (1 to 5).
-				///////////////////////////////////////////////////////////////////////////
+				/////////////////////////////////////////////////////////////////////////
 
 				cells.widthlab = 8*grid;
 				cells.heightlab = 2*grid;
@@ -735,14 +740,15 @@
 						fill: '#EEEEEE',
 						align: 'center'
 					});
+
 					squishFont(label.racks[i], 18*grid);
 				}
 
-			    ///////////////////////////////////////////////////////////////////////////
+			    //////////////////////////////////////////////////////////////////////
 			    // rackImage.mainLayer.add(...) adds the newly created objects and the 
-			    // corresponding text to the main layer within the stage (rackImage) set 
-			    // out in the conditions at the beginning of the code.
-			    ///////////////////////////////////////////////////////////////////////////
+			    // corresponding text to the main layer within the stage (rackImage)
+			    // set out in the conditions at the beginning of the code.
+			    //////////////////////////////////////////////////////////////////////
 
 				for (i = 0; i < 5; i++)
 					this.rackImage.mainLayer.add(cells.racks[i]);
@@ -800,6 +806,7 @@
 			},
 
 			'moveTooltip' : function(){
+
 				var tt = document.getElementById('tooltip'),
 					mousePos = this.rackImage.stage.getPointerPosition(),
 					offsetTop = 0, offsetLeft = 0,
@@ -819,33 +826,59 @@
 				tt.setAttribute('style', 'display:block; z-index:10; position: absolute; left:' + left + '; top:' + top + ';');
 			},
 
-			'writeTooltip' : function(payload){
+			'writeTooltip' : function(i){
+
 				var tt = document.getElementById('tooltip'),
 					content = document.createElement('p'),
-					key, text;
+					value, text;
 
-				if(payload == -1){
+				if(i == -1){
 					tt.setAttribute('style', 'display:none');
 				} else {
 					text = 'Data Payload '
-					for(key in payload){
-						text += '<br>' + key + ': ' + payload[key];
+					for(key in this.tooltipContent[i]){
+						text += '<br>' + key + ': ' + this.tooltipContent[i][key];
 					}
 
-					content.innerHTML = text;
-					tt.innerHTML = '';
-					tt.appendChild(content);
+				content.innerHTML = text;
+				tt.innerHTML = '';
+				tt.appendChild(content);
+
 				}
 			},
 
 			'update' : function(){
-				XHR(this.SOH+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', this.routeData, false, true);				
+
+				XHR(this.SOH+'/?cmd=jcopy&odb0=Equipment/&encoding=json-nokeys', this.routeData.bind(this), false, true);				
+			
 			}, 
 
 			'routeData' : function(response){
-				var data = JSON.parse(response);
 
-				console.log(data)
+				var data = JSON.parse(response),
+					i;
+
+				data = data[0];
+
+				for(i = 0; i < 10; i++){
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+// NOTE TO SELF: this.flag works from here fine (as in, it changes according to the temperature value).
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+					this.flag[i] = 0;
+
+					this.tooltipContent[i] = {'Temperature' : (data.Agilent34970A.Variables.DATA[i]).toFixed(1)};
+
+					if (data.Agilent34970A.Variables.DATA[i] > 21.0){
+						this.flag[i] = 1
+					}
+
+				//console.log(this.flag[i])
+				//console.log(data.Agilent34970A.Variables.DATA[i])
+				}
+
+				console.log(this.flag)
 			}
         }
     });
@@ -854,23 +887,28 @@
 
 //helpers
 function squishFont(string, maxWidth){
+
     while(string.getTextWidth() > maxWidth){
         string.setAttr('fontSize', string.getAttr('fontSize') - 1);
     }
 }
 
 function XHR(URL, callback, mime, noCredentials){
+
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function(){
+
         if(this.readyState != 4) return;
         callback(this.responseText);
     }
 
     if(!noCredentials)
         xmlhttp.withCredentials = true;
+
     if(mime)
         xmlhttp.overrideMimeType(mime);
+
     xmlhttp.open('GET', URL);
     xmlhttp.send();   
 }
