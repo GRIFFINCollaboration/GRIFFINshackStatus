@@ -19,6 +19,8 @@
 
             	this.tooltipContent = [];
             	this.flag = [];
+            	this.sensorstop = [];
+            	this.sensorsbottom = [];
         
             	this.renderRacks();
                 this.update();
@@ -51,7 +53,6 @@
 					grid = Math.min(width/100, height/62),  //20*5 wide, 56+2+2+2 tall
 					cells = {},
 					label = {},
-					ttcontent = {},
 					leftmargin = {},
 					topmargin = {},
 					i;
@@ -115,9 +116,6 @@
 				// with cells.sensorstop at the top and cells.sensorsbottom at the bottom.
 			    //////////////////////////////////////////////////////////////////////////
 
-			    cells.sensorstop = [];
-			    cells.sensorsbottom = [];
-
 			    cells.widthsensors = 16*grid;
 				cells.heightsensors = 2*grid;
 				cells.strokesensors = 'black';
@@ -131,7 +129,7 @@
 
 			    for (i = 0; i < 5; i++){
 
-					cells.sensorstop[i] = new Kinetic.Rect({
+					this.sensorstop[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin + 2*grid,
 						width: cells.widthsensors,
@@ -142,11 +140,11 @@
 						opacity: cells.opacitysensors,
 					}),
 
-					cells.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
-					cells.sensorstop[i].on('mousemove', this.moveTooltip.bind(this, false));
-					cells.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
+					this.sensorstop[i].on('mouseover', this.writeTooltip.bind(this, i ) );
+					this.sensorstop[i].on('mousemove', this.moveTooltip.bind(this, false));
+					this.sensorstop[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
-					cells.sensorsbottom[i] = new Kinetic.Rect({
+					this.sensorsbottom[i] = new Kinetic.Rect({
 						x: leftmargin+(2+20*i)*grid,
 						y: topmargin+60*grid,
 						width: cells.widthsensors,
@@ -157,19 +155,9 @@
 						opacity: cells.opacitysensors,
 					}),
 
-					cells.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
-					cells.sensorsbottom[i].on('mousemove', this.moveTooltip.bind(this, false));
-					cells.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
-
-
-				//	for(i = 0; i < 5; i++){
-				//		if (this.flag[i] == 1){
-			    //			cells.sensorstop[i].setFill = 'red'
-			   	//		}
-			   	//		if (this.flag[i+5] == 1){
-			   	//			cells.sensorsbottom[i].setFill = 'red'
-			   	//		}
-			   	//	}
+					this.sensorsbottom[i].on('mouseover', this.writeTooltip.bind(this, i+5 ) );
+					this.sensorsbottom[i].on('mousemove', this.moveTooltip.bind(this, false));
+					this.sensorsbottom[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 
 				}
 
@@ -275,8 +263,6 @@
 				cells.strokeWhv = 2;
 				cells.opacityhv = 0.6;
 
-				ttcontent.hv0 = 'HV Crate 1';
-
 				cells.hv0 = new Kinetic.Rect({
 					x: leftmargin + 20*grid,
 					y: topmargin+4*grid,
@@ -301,17 +287,13 @@
 			        listening: false
 			   	});
 
-				cells.hv0.on('mouseover', this.writeTooltip.bind(this, {'HVIndex':ttcontent.hv0} ) );
+				cells.hv0.on('mouseover', this.writeTooltip.bind(this, 10 ) );
 				cells.hv0.on('mousemove', this.moveTooltip.bind(this, false));
 				cells.hv0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.hv0, 18*grid);
 
 				cells.hv = [];
 				label.hv = [];
-				ttcontent.hv = [];
-
-				for (i = 1; i < 3; i++)
-					ttcontent.hv[i] = 'HV Crate ' + (i+1);
 
 				for (i = 1; i < 3; i++){
 			        cells.hv[i] = new Kinetic.Rect({
@@ -338,7 +320,7 @@
 			            listening: false
 			      	});
 
-			      	cells.hv[i].on('mouseover', this.writeTooltip.bind(this, {'HVIndex':ttcontent.hv[i]} ) );
+			      	cells.hv[i].on('mouseover', this.writeTooltip.bind(this, i+10) );
 					cells.hv[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.hv[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 					squishFont(label.hv[i], 18*grid);
@@ -358,10 +340,6 @@
 
 				cells.nim = [];
 				label.nim =[];
-				ttcontent.nim= [];
-
-				for (i = 0; i < 7; i++)
-					ttcontent.nim[i] = 'NIM Crate ' + (i+1);
 
 				for (i = 0; i < 5; i++){
 			        cells.nim[i] = new Kinetic.Rect({
@@ -388,7 +366,7 @@
 			            listening: false
 			        });
 
-			        cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
+			        cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
 					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.nim[i], 18*grid);
@@ -419,7 +397,7 @@
 			            listening: false
 			      	});
 
-			      	cells.nim[i].on('mouseover', this.writeTooltip.bind(this, {'NIMIndex':ttcontent.nim[i]} ) );
+			      	cells.nim[i].on('mouseover', this.writeTooltip.bind(this, i+13 ) );
 					cells.nim[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.nim[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.nim[i], 18*grid);
@@ -439,12 +417,6 @@
 
 				cells.vme = [];
 				label.vme = [];
-				ttcontent.vme = [];
-
-				for (i = 0; i < 6; i++)
-					ttcontent.vme[i] = 'VME Crate ' + (i+1);
-
-				ttcontent.vme6 = 'VME Crate 7';
 
 				for (i = 0; i < 4; i++){
 					cells.vme[i] = new Kinetic.Rect({
@@ -471,7 +443,7 @@
 			       		listening: false
 			      	});
 
-			      	cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
+			      	cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
 					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			      	squishFont(label.vme[i], 18*grid);
@@ -502,7 +474,7 @@
 			       		listening: false
 			     	 });
 
-				    cells.vme[i].on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme[i]} ) );
+				    cells.vme[i].on('mouseover', this.writeTooltip.bind(this, i+20 ) );
 					cells.vme[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.vme[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 				    squishFont(label.vme[i], 18*grid);
@@ -532,7 +504,7 @@
 			       	listening: false
 			   	});
 
- 		      	cells.vme6.on('mouseover', this.writeTooltip.bind(this, {'VMEIndex':ttcontent.vme6} ) );
+ 		      	cells.vme6.on('mouseover', this.writeTooltip.bind(this, 26 ) );
 				cells.vme6.on('mousemove', this.moveTooltip.bind(this, false));
 				cells.vme6.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.vme6, 18*grid);
@@ -552,12 +524,6 @@
 
 				cells.dsa = [];
 			   	label.dsa = [];
-			   	ttcontent.dsa = [];
-
-			   	ttcontent.dsa0 = 'Data Storage Array 1'
-
-			   	for (i = 1; i < 4; i++)
-			   		ttcontent.dsa[i] = 'Data Storage Array ' + (i+1);
 
 				cells.dsa0 = new Kinetic.Rect({
 					x: leftmargin,
@@ -583,7 +549,7 @@
 			        listening: false
 			   	});
 
-			    cells.dsa0.on('mouseover', this.writeTooltip.bind(this, {'DSAIndex':ttcontent.dsa0} ) );
+			    cells.dsa0.on('mouseover', this.writeTooltip.bind(this, 29 ) );
 				cells.dsa0.on('mousemove', this.moveTooltip.bind(this, false));
 				cells.dsa0.on('mouseout', this.writeTooltip.bind(this, -1) );
 			   	squishFont(label.dsa0, 18*grid);
@@ -613,7 +579,7 @@
 			            listening: false
 			        });
 
-			        cells.dsa[i].on('mouseover', this.writeTooltip.bind(this, {'DSAIndex':ttcontent.dsa[i]} ) );
+			        cells.dsa[i].on('mouseover', this.writeTooltip.bind(this, i+29 ) );
 					cells.dsa[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.dsa[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.dsa[i], 18*grid);
@@ -675,10 +641,6 @@
 
 				cells.comp = [];
 			   	label.comp = [];
-			   	ttcontent.comp = [];
-
-			   	for (i = 0; i < 2; i++)
-			   		ttcontent.comp[i] = 'Computer ' + (i+1);
 
 				for (i = 0; i < 2; i++){
 					cells.comp[i] = new Kinetic.Rect({
@@ -705,7 +667,7 @@
 			            listening: false
 			        });
 
-			        cells.comp[i].on('mouseover', this.writeTooltip.bind(this, {'ComputerIndex':ttcontent.comp[i]} ) );
+			        cells.comp[i].on('mouseover', this.writeTooltip.bind(this, i+27 ) );
 					cells.comp[i].on('mousemove', this.moveTooltip.bind(this, false));
 					cells.comp[i].on('mouseout', this.writeTooltip.bind(this, -1) );
 			        squishFont(label.comp[i], 18*grid);
@@ -754,8 +716,8 @@
 					this.rackImage.mainLayer.add(cells.racks[i]);
 
 				for (i = 0; i < 5; i++)
-					this.rackImage.mainLayer.add(cells.sensorstop[i]),
-					this.rackImage.mainLayer.add(cells.sensorsbottom[i]);
+					this.rackImage.mainLayer.add(this.sensorstop[i]),
+					this.rackImage.mainLayer.add(this.sensorsbottom[i]);
 
 				for (i = 0; i < 14; i++)
 					this.rackImage.mainLayer.add(cells.cableman[i]);
@@ -861,26 +823,65 @@
 				data = data[0];
 
 				for(i = 0; i < 10; i++){
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////
-// NOTE TO SELF: this.flag works from here fine (as in, it changes according to the temperature value).
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-					this.flag[i] = 0;
-
 					this.tooltipContent[i] = {'Temperature' : (data.Agilent34970A.Variables.DATA[i]).toFixed(1)};
 
-					if (data.Agilent34970A.Variables.DATA[i] > 21.0){
+					if (data.Agilent34970A.Variables.DATA[i] > 32){
 						this.flag[i] = 1
+					} else {
+						this.flag[i] = 0
 					}
-
-				//console.log(this.flag[i])
-				//console.log(data.Agilent34970A.Variables.DATA[i])
 				}
 
-				console.log(this.flag)
+				for (i = 10; i < 13; i++){
+					this.tooltipContent[i] = {'HV Crate ' : (i-9)};
+				}
+
+				for (i = 13; i < 20; i++){
+					this.tooltipContent[i] = {'NIM Crate' : (i-12)};
+				}
+
+				for (i = 20; i < 27; i++){
+					this.tooltipContent[i] = {'VME Crate' : (i-19)};
+				}
+
+				for (i = 27; i < 29; i++){
+					this.tooltipContent[i] = {'Computer' : (i-26)};
+				}
+
+				for (i = 29; i < 33; i++){
+					this.tooltipContent[i] = {'Data Storage Array' : (i-28)};
+				}
+
+				this.updateRacks();
+
+			},
+
+			///////////////////////////////////////////////////////////////////////////
+			// The 'updateRacks' function changes the colour of the temperature sensors
+			// if the warning or alarms are triggered to alert the user. They are set
+			// so that if the warning alarm is triggered, the cells change colour.
+			///////////////////////////////////////////////////////////////////////////
+
+			'updateRacks' : function(){
+
+				for (i = 0; i < 5; i++){
+				
+					if (this.flag[i] == 1){
+						this.sensorstop[i].setAttr('fill', 'red');
+					} else {
+						this.sensorstop[i].setAttr('fill', 'lightgray');
+					}
+
+					if (this.flag[i+5] == 1){
+						this.sensorsbottom[i].setAttr('fill', 'red');
+					} else {
+						this.sensorsbottom[i].setAttr('fill', 'lightgray');
+					}
+				}
+
+				this.rackImage.mainLayer.draw();
 			}
-        }
+		}
     });
 
 })();
